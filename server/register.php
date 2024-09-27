@@ -1,56 +1,64 @@
+<?php require_once("includes/connection.php"); ?>
 <?php
-// Подключение к базе данных
-$servername = "localhost"; // Замените на имя сервера базы данных
-$username = "root"; // Замените на имя пользователя базы данных
-$password = ""; // Замените на пароль пользователя базы данных
-$dbname = "my_database"; // Замените на имя базы данных
+	
+	if(isset($_POST["register"])){
+	
+	if(!empty($_POST['full_name']) && !empty($_POST['email']) && !empty($_POST['username']) && !empty($_POST['password'])) {
+  $full_name= htmlspecialchars($_POST['full_name']);
+	$email=htmlspecialchars($_POST['email']);
+ $username=htmlspecialchars($_POST['username']);
+ $password=htmlspecialchars($_POST['password']);
+ $query=mysql_query("SELECT * FROM usertbl WHEREusername='".$username."'");
+  $numrows=mysql_num_rows($query);
+if($numrows==0)
+   {
+	$sql="INSERT INTO usertbl
+  (full_name, email, username,password)
+	VALUES('$full_name','$email', '$username', '$password')";
+  $result=mysql_query($sql);
+ if($result){
+	$message = "Account Successfully Created";
+} else {
+ $message = "Failed to insert data information!";
+  }
+	} else {
+	$message = "That username already exists! Please try another one!";
+   }
+	} else {
+	$message = "All fields are required!";
+	}
+	}
+	?>
 
-// Создайте соединение
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Проверьте подключение
-if ($conn->connect_error) {
-    die("Ошибка подключения: " . $conn->connect_error);
-}
-
-// Проверка, была ли отправлена форма
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    // Получение данных из формы
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-
-    // Валидация данных
-    if (empty($username) || empty($email) || empty($password)) {
-        $error_message = 'Пожалуйста, заполните все поля.';
-    } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error_message = 'Неверный формат email.';
-    } else {
-        // Проверка, существует ли пользователь с таким email
-        $sql = "SELECT * FROM users WHERE email = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        if ($result->num_rows > 0) {
-            $error_message = 'Пользователь с таким email уже существует.';
-        } else {
-            // Хеширование пароля
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-            // Добавление пользователя в базу данных
-            $sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("sss", $username, $email, $hashed_password);
-
-            if ($stmt->execute()) {
-                // Регистрация успешна
-                $success_message = 'Регистрация прошла успешно!';
-            } else {
-                $error_message = 'Произошла ошибка при регистрации.';
-            }
-        }
-    }
-}
+	<?php if (!empty($message)) {echo "<p class="error">" . "MESSAGE: ". $message . "</p>";} ?>
+<!DOCTYPE html>
+	<html lang="en">
+	<head>
+	<meta charset="utf-8"> 
+ <title> Сайт</title>
+<link href="css/style.css" media="screen" rel="stylesheet">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'rel='stylesheet' type='text/css'>
+	</head>
+	<body>
+<div class="container mregister">
+<div id="login">
+ <h1>Регистрация</h1>
+<form action="register.php" id="registerform" method="post"name="registerform">
+ <p><label for="user_login">Полное имя<br>
+ <input class="input" id="full_name" name="full_name"size="32"  type="text" value=""></label></p>
+<p><label for="user_pass">E-mail<br>
+<input class="input" id="email" name="email" size="32"type="email" value=""></label></p>
+<p><label for="user_pass">Имя пользователя<br>
+<input class="input" id="username" name="username"size="20" type="text" value=""></label></p>
+<p><label for="user_pass">Пароль<br>
+<input class="input" id="password" name="password"size="32"   type="password" value=""></label></p>
+<p class="submit"><input class="button" id="register" name= "register" type="submit" value="Зарегистрироваться"></p>
+	  <p class="regtext">Уже зарегистрированы? <a href= "login.php">Введите имя пользователя</a>!</p>
+ </form>
+</div>
+</div>
+<footer>
+© 2024. Все права защищены.
+ </footer>
+</body>
+</html>

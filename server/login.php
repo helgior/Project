@@ -1,67 +1,76 @@
+<?php require_once("includes/connection.php"); ?>
 <?php
-session_start();
+	session_start();
+	?>
 
-// Функция для входа пользователя
-function login($username, $password) {
-    // Подключение к базе данных
-    $host = 'localhost'; // адрес сервера
-    $db   = 'your_database'; // имя базы данных
-    $user = 'your_username'; // имя пользователя
-    $pass = 'your_password'; // пароль
-    $charset = 'utf8mb4';
-    
-    $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-    $options = [
-        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        PDO::ATTR_EMULATE_PREPARES   => false,
-    ];
-    
-    try {
-        $pdo = new PDO($dsn, $user, $pass, $options);
-    } catch (PDOException $e) {
-        throw new PDOException($e->getMessage(), (int)$e->getCode());
-    }
-    
-    // Подготовка и выполнение SQL-запроса
-    $stmt = $pdo->prepare('SELECT * FROM users WHERE username = ?');
-    $stmt->execute([$username]);
-    $user = $stmt->fetch();
+	<?php require_once("includes/connection.php"); ?>
+	<?php include("includes/header.php"); ?>	 
+	<?php
+	
+	if(isset($_SESSION["session_username"])){
+	// вывод "Session is set"; // в целях проверки
+	header("Location: intropage.php");
+	}
 
-    // Проверка пароля и существования пользователя
-    if ($user && password_verify($password, $user['password'])) {
-        // Если логин успешен, устанавливаем сессию
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['username'] = $user['username'];
-        echo "Вы успешно вошли в систему!";
-        // Перенаправление пользователя или выполнение другого действия
-    } else {
-        echo "Неправильное имя пользователя или пароль.";
-    }
-}
+	if(isset($_POST["login"])){
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'] ?? '';
-    $password = $_POST['password'] ?? '';
-    login($username, $password);
-}
-?>
-
+	if(!empty($_POST['username']) && !empty($_POST['password'])) {
+	$username=htmlspecialchars($_POST['username']);
+	$password=htmlspecialchars($_POST['password']);
+	$query =mysql_query("SELECT * FROM usertbl WHEREusername='".$username."' AND password='".$password."'");
+	$numrows=mysql_num_rows($query);
+	if($numrows!=0)
+ {
+while($row=mysql_fetch_assoc($query))
+ {
+	$dbusername=$row['username'];
+  $dbpassword=$row['password'];
+ }
+  if($username == $dbusername && $password == $dbpassword)
+ {
+	// старое место расположения
+	//  session_start();
+	 $_SESSION['session_username']=$username;	 
+ /* Перенаправление браузера */
+   header("Location: intropage.php");
+	}
+	} else {
+	//  $message = "Invalid username or password!";
+	
+	echo  "Invalid username or password!";
+ }
+	} else {
+    $message = "All fields are required!";
+	}
+	}
+	?>
 <!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Вход в систему</title>
-</head>
+	<html lang="en">
+	<head>
+<meta charset="utf-8">
+<title> Сайт</title>
+<link href="css/style.css" media="screen" rel="stylesheet">
+<link href= 'http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+</head> 
 <body>
-    <form action="login.php" method="post">
-        <label for="username">Имя пользователя:</label>
-        <input type="text" id="username" name="username" required><br>
-        
-        <label for="password">Пароль:</label>
-        <input type="password" id="password" name="password" required><br>
-        
-        <button type="submit">Войти</button>
-    </form>
+<div class="container mlogin">
+<div id="login">
+<h1>Вход</h1>
+<form action="" id="loginform" method="post"name="loginform">
+<p><label for="user_login">Имя опльзователя<br>
+<input class="input" id="username" name="username"size="20"
+type="text" value=""></label></p>
+<p><label for="user_pass">Пароль<br>
+ <input class="input" id="password" name="password"size="20"
+  type="password" value=""></label></p> 
+	<p class="submit"><input class="button" name="login"type= "submit" value="Log In"></p>
+	<p class="regtext">Еще не зарегистрированы?<a href= "register.php">Регистрация</a>!</p>
+   </form>
+ </div>
+  </div>
+<footer>
+© 2024. Все права защищены.
+
+</footer>
 </body>
 </html>

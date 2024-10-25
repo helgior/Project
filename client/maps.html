@@ -4,8 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Оплата - ЖКХ онлайн</title>
+    <title>Карты</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -21,14 +28,19 @@
                 <li><a href="community.html">Сообщество</a></li>
                 <li><a href="news.html">Новости</a></li>
                 <li><a href="help.html">Помощь</a></li>
-                <li><a href="help.html">Карта района</a></li>
+                <li><a href="maps.html">Карта района</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
         <section>
+            <body>
+                <h1>Карта села Завьялово</h1>
+                <div id="map"></div>
             
+                <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+                <script src="map.js"></script>
         </section>
     </main>
 

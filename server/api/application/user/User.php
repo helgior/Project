@@ -1,6 +1,10 @@
 <?php
 
+require_once 'DB.php';
+
 class User {
+    private $db;
+
     function __construct($db) {
         $this->db = $db;
     }
@@ -18,6 +22,7 @@ class User {
                 return [
                     'id' => $user->id,
                     'name' => $user->name,
+                    'role' => $user->role, // Включите роль
                     'token' => $token
                 ];
             }
@@ -35,19 +40,20 @@ class User {
         return ['error' => 1003];
     }
 
-    public function registration($login, $password, $name) {
-        $user = $this->db->getUserByLogin($login, $password);
+    public function registration($login, $password, $name, $role) {
+        $user = $this->db->getUserByLogin($login);
         if ($user) {
             return ['error' => 1001];
         }
-        $this->db->registration($login, $password, $name);
-        $user = $this->db->getUserByLogin($login, $password);
+        $this->db->registration($login, password_hash($password, PASSWORD_DEFAULT), $name, $role);
+        $user = $this->db->getUserByLogin($login);
         if ($user) {
             $token = md5(rand());
             $this->db->updateToken($user->id, $token);
             return [
                 'id' => $user->id,
                 'name' => $user->name,
+                'role' => $user->role, // Включите роль
                 'token' => $token
             ];
         }

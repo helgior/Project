@@ -1,7 +1,8 @@
 @charset 'utf-8';
 
-$font-size: 30px; // 1920x1080
+$font-size: 30px; // Базовый размер шрифта для разрешения 1920x1080
 
+// === Импорт переменных и базовых стилей ===
 @import './scss/variables';
 
 body {
@@ -10,9 +11,9 @@ body {
     color: $text-color;
     margin: 0;
     padding: 0;
-    font-family: 'Play', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    font-size: $font-size;
+    font-family: 'Play', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 
+        'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-touch-callout: none; /* iOS Safari */
@@ -21,20 +22,20 @@ body {
     -moz-user-select: none;      /* Firefox */
     -ms-user-select: none;       /* Internet Explorer/Edge */
     user-select: none;
-    transition: background-color 0.3s ease;
-
-    &:hover {
-        background-color: darken($main-theme, 5%);
-    }
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+    font-family: 'Courier New', source-code-pro, Menlo, Monaco, Consolas, monospace;
+    background-color: lighten($main-theme, 10%);
+    padding: 5px 10px;
+    border-radius: $border-radius;
+    display: inline-block;
+    color: $accent-color;
 }
 
 * {
-    touch-action: manipulation;
+    touch-action: manipulation; // Предотвращает ненужное поведение на мобильных устройствах
 }
 
+// === Импорт глобальных сбросов стилей ===
 @import './scss/main';

@@ -79,5 +79,12 @@ class DB {
     public function setBannerOrder($id, $priority) {
         return $this->execute("UPDATE banners SET priority=? WHERE id=?", [$priority, $id]);
     }
+    public function getNews() {
+        return $this->queryAll("SELECT * FROM news ORDER BY date DESC");
+    }
+    
+    public function addNews($title, $text, $image) {
+        return $this->execute("INSERT INTO news (title, text, image) VALUES (?, ?, ?)", [$title, $text, $image]);
+    }
     
 }

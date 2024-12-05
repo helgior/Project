@@ -21,4 +21,11 @@ class News {
     public function setBannerOrder($id, $priority) {
         return $this->db->setBannerOrder($id, $priority);
     }
+    public function getNews() {
+        return $this->db->getNews();
+    }
+
+    public function addNews($title, $text, $image) {
+        return $this->db->addNews($title, $text, $image);
+    }
 }

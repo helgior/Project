@@ -40,6 +40,13 @@ export type TBanner = {
     hidden: boolean;
     priority: number;
 }
+export type TNews = {
+    id: number;
+    title: string;
+    text: string;
+    image: string | null;
+    date: string;
+}
 
 
 

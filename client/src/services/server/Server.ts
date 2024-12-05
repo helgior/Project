@@ -1,7 +1,7 @@
 import md5 from 'md5';
 import CONFIG from "../../config";
 import Store from "../store/Store";
-import { TAnswer, TBanner, TError, TMessagesResponse, TUser } from "./types";
+import { TAnswer, TBanner, TError, TMessagesResponse, TUser, TNews} from "./types";
 
 const { CHAT_TIMESTAMP, HOST } = CONFIG;
 
@@ -121,6 +121,14 @@ class Server {
     setBannerOrder(id: number, priority: number): Promise<boolean | null> {
         return this.request<boolean>('setBannerOrder', { id: id.toString(), priority: priority.toString() });
     }
+    getNews(): Promise<TNews[] | null> {
+        return this.request<TNews[]>('getNews');
+    }
+    
+    addNews(title: string, text: string, image: string): Promise<boolean | null> {
+        return this.request<boolean>('addNews', { title, text, image });
+    }
+    
     
     
 }

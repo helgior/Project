@@ -98,5 +98,14 @@ class Application {
         }
         return ['error' => 242];
     }
+    public function getNews($params) {
+        return $this->news->getNews();
+    }
     
+    public function addNews($params) {
+        if ($params['title'] && $params['text']) {
+            return $this->news->addNews($params['title'], $params['text'], $params['image']);
+        }
+        return ['error' => 242];
+    }
 }

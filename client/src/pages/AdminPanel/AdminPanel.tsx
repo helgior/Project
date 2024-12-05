@@ -19,6 +19,9 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
     const [text, setText] = useState('');
     const [image, setImage] = useState('');
     const [url, setUrl] = useState('');
+    const [newsTitle, setNewsTitle] = useState('');
+    const [newsText, setNewsText] = useState('');
+    const [newsImage, setNewsImage] = useState('');
 
     useEffect(() => {
         (async () => {
@@ -89,6 +92,15 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
         }
     };
 
+    const addNews = async () => {
+        const response = await server.addNews(newsTitle, newsText, newsImage);
+        if (response) {
+            alert('Новость успешно добавлена');
+        } else {
+            alert('Ошибка при добавлении новости');
+        }
+    };
+
     if (user && user.role !== 'admin') {
         return <div>Доступ запрещен</div>;
     }
@@ -129,6 +141,12 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
                         />
                     </div>
                 ))}
+            </div>
+            <div>
+                <input type="text" placeholder="Заголовок новости" value={newsTitle} onChange={(e) => setNewsTitle(e.target.value)} />
+                <input type="text" placeholder="Текст новости" value={newsText} onChange={(e) => setNewsText(e.target.value)} />
+                <input type="text" placeholder="Изображение новости" value={newsImage} onChange={(e) => setNewsImage(e.target.value)} />
+                <Button text="Добавить новость" onClick={addNews} />
             </div>
             <Button text="Назад" onClick={() => setPage(PAGES.MAIN)} />
         </div>

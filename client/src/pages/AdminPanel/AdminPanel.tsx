@@ -67,6 +67,28 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
         }
     };
 
+    const hideBanner = async (id: number, hidden: boolean) => {
+        const response = await server.updateBanner(id, hidden);
+        if (response) {
+            const bannersRes = await server.getBanners();
+            setBanners(bannersRes);
+            alert('Баннер успешно скрыт');
+        } else {
+            alert('Ошибка при скрытии баннера');
+        }
+    };
+
+    const setBannerOrder = async (id: number, priority: number) => {
+        const response = await server.setBannerOrder(id, priority);
+        if (response) {
+            const bannersRes = await server.getBanners();
+            setBanners(bannersRes);
+            alert('Приоритет баннера успешно изменен');
+        } else {
+            alert('Ошибка при изменении приоритета баннера');
+        }
+    };
+
     if (user && user.role !== 'admin') {
         return <div>Доступ запрещен</div>;
     }
@@ -98,6 +120,13 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
                     <div key={banner.id}>
                         <p>{banner.title}</p>
                         <Button text="Удалить" onClick={() => deleteBanner(banner.id)} />
+                        <Button text={banner.hidden ? "Показать" : "Скрыть"} onClick={() => hideBanner(banner.id, !banner.hidden)} />
+                        <input
+                            type="number"
+                            placeholder="Приоритет"
+                            value={banner.priority}
+                            onChange={(e) => setBannerOrder(banner.id, parseInt(e.target.value))}
+                        />
                     </div>
                 ))}
             </div>

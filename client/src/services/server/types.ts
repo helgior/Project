@@ -38,6 +38,8 @@ export type TBanner = {
     image: string;
     url: string;
     hidden: boolean;
+    priority: number;
 }
+
 
 

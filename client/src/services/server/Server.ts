@@ -118,6 +118,10 @@ class Server {
     updateBanner(id: number, hidden: boolean): Promise<boolean | null> {
         return this.request<boolean>('updateBanner', { id: id.toString(), hidden: hidden.toString() });
     }
+    setBannerOrder(id: number, priority: number): Promise<boolean | null> {
+        return this.request<boolean>('setBannerOrder', { id: id.toString(), priority: priority.toString() });
+    }
+    
     
 }
 

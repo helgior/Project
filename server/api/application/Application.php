@@ -92,4 +92,11 @@ class Application {
         }
         return ['error' => 242];
     }
+    public function setBannerOrder($params) {
+        if ($params['id'] && isset($params['priority'])) {
+            return $this->news->setBannerOrder($params['id'], $params['priority']);
+        }
+        return ['error' => 242];
+    }
+    
 }

@@ -76,5 +76,8 @@ class DB {
     public function updateBanner($id, $hidden) {
         return $this->execute("UPDATE banners SET hidden=? WHERE id=?", [$hidden, $id]);
     }
+    public function setBannerOrder($id, $priority) {
+        return $this->execute("UPDATE banners SET priority=? WHERE id=?", [$priority, $id]);
+    }
     
 }

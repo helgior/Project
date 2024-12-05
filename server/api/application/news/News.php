@@ -18,4 +18,7 @@ class News {
     public function updateBanner($id, $hidden) {
         return $this->db->updateBanner($id, $hidden);
     }
+    public function setBannerOrder($id, $priority) {
+        return $this->db->setBannerOrder($id, $priority);
+    }
 }

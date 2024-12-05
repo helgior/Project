@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import CONFIG from '../../config';
 import { ServerContext } from '../../App';
-import { BannerProvider } from '../../components/BannerContext/BannerContext';
+import { useBannerContext } from '../../components/BannerContext/BannerContext';
 import { IBasePage } from '../PageManager';
 import Menu from '../../components/Menu/Menu';
 

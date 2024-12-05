@@ -80,4 +80,10 @@ class Application {
         }
         return ['error' => 242];
     }
+    public function deleteBanner($params) {
+        if ($params['id']) {
+            return $this->news->deleteBanner($params['id']);
+        }
+        return ['error' => 242];
+    }
 }

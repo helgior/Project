@@ -12,4 +12,7 @@ class News {
     public function addBanner($title, $text, $image, $url) {
         return $this->db->addBanner($title, $text, $image, $url);
     }
+    public function deleteBanner($id) {
+        return $this->db->deleteBanner($id);
+    }
 }

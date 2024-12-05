@@ -1,14 +1,15 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { StoreContext, ServerContext } from '../../App';
 import { useBannerContext } from '../../components/BannerContext/BannerContext';
 import Button from '../../components/Button/Button';
 import { IBasePage, PAGES } from '../../pages/PageManager';
+import { TBanner } from '../../services/server/types';
 
 const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
     const { setPage } = props;
     const store = useContext(StoreContext);
     const server = useContext(ServerContext);
-    const { setBanners } = useBannerContext();
+    const { banners, setBanners } = useBannerContext();
     const user = store.getUser();
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
@@ -18,6 +19,15 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
     const [text, setText] = useState('');
     const [image, setImage] = useState('');
     const [url, setUrl] = useState('');
+
+    useEffect(() => {
+        (async () => {
+            if (!banners) {
+                const bannersRes = await server.getBanners();
+                setBanners(bannersRes);
+            }
+        })();
+    }, [banners, server, setBanners]);
 
     const addUser = async () => {
         const response = await fetch('/api/register', {
@@ -46,6 +56,17 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
         }
     };
 
+    const deleteBanner = async (id: number) => {
+        const response = await server.deleteBanner(id);
+        if (response) {
+            const bannersRes = await server.getBanners();
+            setBanners(bannersRes);
+            alert('Баннер успешно удален');
+        } else {
+            alert('Ошибка при удалении баннера');
+        }
+    };
+
     if (user && user.role !== 'admin') {
         return <div>Доступ запрещен</div>;
     }
@@ -70,6 +91,15 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
                 <input type="text" placeholder="Изображение баннера" value={image} onChange={(e) => setImage(e.target.value)} />
                 <input type="text" placeholder="URL баннера" value={url} onChange={(e) => setUrl(e.target.value)} />
                 <Button text="Добавить баннер" onClick={addBanner} />
+            </div>
+            <div>
+                <h2>Список баннеров</h2>
+                {banners && banners.map((banner: TBanner) => (
+                    <div key={banner.id}>
+                        <p>{banner.title}</p>
+                        <Button text="Удалить" onClick={() => deleteBanner(banner.id)} />
+                    </div>
+                ))}
             </div>
             <Button text="Назад" onClick={() => setPage(PAGES.MAIN)} />
         </div>

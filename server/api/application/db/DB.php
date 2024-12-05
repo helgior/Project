@@ -70,4 +70,7 @@ class DB {
     public function addBanner($title, $text, $image, $url) {
         return $this->execute("INSERT INTO banners (title, text, image, url) VALUES (?, ?, ?, ?)", [$title, $text, $image, $url]);
     }
+    public function deleteBanner($id) {
+        return $this->execute("DELETE FROM banners WHERE id=?", [$id]);
+    }
 }

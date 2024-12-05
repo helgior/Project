@@ -112,6 +112,9 @@ class Server {
     addBanner(title: string, text: string, image: string, url: string): Promise<boolean | null> {
         return this.request<boolean>('addBanner', { title, text, image, url });
     }
+    deleteBanner(id: number): Promise<boolean | null> {
+        return this.request<boolean>('deleteBanner', { id: id.toString() });
+    }
 }
 
 export default Server;

@@ -109,6 +109,9 @@ class Server {
     getBanners(): Promise<TBanner[] | null> {
         return this.request<TBanner[]>('getBanners');
     }
+    addBanner(title: string, text: string, image: string, url: string): Promise<boolean | null> {
+        return this.request<boolean>('addBanner', { title, text, image, url });
+    }
 }
 
 export default Server;

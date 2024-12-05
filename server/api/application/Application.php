@@ -74,4 +74,10 @@ class Application {
         }
         return ['error' => 242];
     }
+    public function addBanner($params) {
+        if ($params['title'] && $params['image'] && $params['url']) {
+            return $this->news->addBanner($params['title'], $params['text'], $params['image'], $params['url']);
+        }
+        return ['error' => 242];
+    }
 }

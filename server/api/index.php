@@ -28,7 +28,7 @@ function result($params) {
             //...
 
             case 'login': return $app->login($params); // Орлов (+ столбец "роль")
-            case 'addBanner': return $app->addBanner($params); // POST Кашурникова
+            case 'addBanner': return $app->addBanner($params);
             case 'deleteBanner': return $app->deleteBanner($params); // Шергазиев
             case 'updateBanner': return $app->updateBanner($params); // Сысоев POST (уметь скрывать баннер)
             case 'setBannerOrder': return $app->setBannerOrder($params); // Джафаров 

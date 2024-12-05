@@ -63,4 +63,11 @@ class DB {
     public function addMap($streetName, $coordinates, $houses) {
         $this->execute("INSERT INTO maps (street_name, coordinates, houses) VALUES (?, ?, ?)", [$streetName, json_encode($coordinates), json_encode($houses)]);
     }
+    public function getBanners() {
+        return $this->queryAll("SELECT * FROM banners");
+    }
+    
+    public function addBanner($title, $text, $image, $url) {
+        return $this->execute("INSERT INTO banners (title, text, image, url) VALUES (?, ?, ?, ?)", [$title, $text, $image, $url]);
+    }
 }

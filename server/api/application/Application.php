@@ -86,4 +86,10 @@ class Application {
         }
         return ['error' => 242];
     }
+    public function updateBanner($params) {
+        if ($params['id'] && isset($params['hidden'])) {
+            return $this->news->updateBanner($params['id'], $params['hidden']);
+        }
+        return ['error' => 242];
+    }
 }

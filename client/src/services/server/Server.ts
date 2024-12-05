@@ -115,6 +115,10 @@ class Server {
     deleteBanner(id: number): Promise<boolean | null> {
         return this.request<boolean>('deleteBanner', { id: id.toString() });
     }
+    updateBanner(id: number, hidden: boolean): Promise<boolean | null> {
+        return this.request<boolean>('updateBanner', { id: id.toString(), hidden: hidden.toString() });
+    }
+    
 }
 
 export default Server;

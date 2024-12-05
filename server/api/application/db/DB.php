@@ -73,4 +73,8 @@ class DB {
     public function deleteBanner($id) {
         return $this->execute("DELETE FROM banners WHERE id=?", [$id]);
     }
+    public function updateBanner($id, $hidden) {
+        return $this->execute("UPDATE banners SET hidden=? WHERE id=?", [$hidden, $id]);
+    }
+    
 }

@@ -37,5 +37,7 @@ export type TBanner = {
     text: string | null;
     image: string;
     url: string;
+    hidden: boolean;
 }
+
 

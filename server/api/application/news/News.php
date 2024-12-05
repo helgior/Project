@@ -15,4 +15,7 @@ class News {
     public function deleteBanner($id) {
         return $this->db->deleteBanner($id);
     }
+    public function updateBanner($id, $hidden) {
+        return $this->db->updateBanner($id, $hidden);
+    }
 }

@@ -42,6 +42,7 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
                 <select value={role} onChange={(e) => setRole(e.target.value)}>
                     <option value="user">Пользователь</option>
                     <option value="admin">Администратор</option>
+                    <option value="executor">Исполнитель</option>
                 </select>
                 <Button text="Добавить пользователя" onClick={addUser} />
             </div>
@@ -49,5 +50,6 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
         </div>
     );
 };
+
 
 export default AdminPanel;

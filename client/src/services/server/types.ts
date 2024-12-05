@@ -14,8 +14,10 @@ export type TAnswer<T> = {
 export type TUser = {
     token: string;
     name: string;
-    role: 'user' | 'admin'; // Обновите тип роли
+    role: 'user' | 'admin' | 'executor'; // Обновите тип роли
 }
+
+
 
 export type TMessage = {
     message: string;

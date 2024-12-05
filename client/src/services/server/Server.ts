@@ -66,10 +66,11 @@ class Server {
         }
     }
 
-    registration(login: string, password: string, name: string, role: 'user' | 'admin'): Promise<boolean | null> {
+    registration(login: string, password: string, name: string, role: 'user' | 'admin' | 'executor'): Promise<boolean | null> {
         const hash = md5(`${login}${password}`);
         return this.request<boolean>('registration', { login, hash, name, role });
     }
+    
 
     sendMessage(message: string): void {
         this.request<boolean>('sendMessage', { message });

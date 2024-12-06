@@ -17,46 +17,43 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `users`
+-- Структура таблицы `news`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE `news` (
   `id` int NOT NULL,
-  `fio` varchar(255) NOT NULL,
-  `login` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `token` varchar(255) DEFAULT NULL,
-  `role` enum('user','admin','executor') NOT NULL
+  `title` varchar(255) NOT NULL,
+  `text` text NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `date` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Дамп данных таблицы `users`
+-- Дамп данных таблицы `news`
 --
 
-INSERT INTO `users` (`id`, `fio`, `login`, `password`, `token`, `role`) VALUES
-(1, 'Иван Иванов', 'ivan', '123456', NULL, 'user'),
-(2, 'Орлов Олег', 'Щдуп', '123456', NULL, 'admin');
+INSERT INTO `news` (`id`, `title`, `text`, `image`, `date`) VALUES
+(1, 'Новая новость', 'Текст новости', '/images/news1.jpg', '2024-12-06 06:11:00');
 
 --
 -- Индексы сохранённых таблиц
 --
 
 --
--- Индексы таблицы `users`
+-- Индексы таблицы `news`
 --
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `login` (`login`);
+ALTER TABLE `news`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT для сохранённых таблиц
 --
 
 --
--- AUTO_INCREMENT для таблицы `users`
+-- AUTO_INCREMENT для таблицы `news`
 --
-ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `news`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -108,4 +108,11 @@ class Application {
         }
         return ['error' => 242];
     }
+
+    public function deleteNews($params) {
+        if ($params['id']) {
+            return $this->news->deleteNews($params['id']);
+        }
+        return ['error' => 242];
+    }
 }

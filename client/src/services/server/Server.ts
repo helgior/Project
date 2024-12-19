@@ -129,7 +129,9 @@ class Server {
         return this.request<boolean>('addNews', { title, text, image });
     }
     
-    
+    deleteNews(id: number): Promise<boolean | null> {
+        return this.request<boolean>('deleteNews', { id: id.toString() });
+    }
     
 }
 

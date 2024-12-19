@@ -87,4 +87,8 @@ class DB {
         return $this->execute("INSERT INTO news (title, text, image) VALUES (?, ?, ?)", [$title, $text, $image]);
     }
     
+    public function deleteNews($id) {
+        return $this->execute("DELETE FROM news WHERE id=?", [$id]);
+    }
+    
 }

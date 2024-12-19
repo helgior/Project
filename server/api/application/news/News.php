@@ -28,4 +28,8 @@ class News {
     public function addNews($title, $text, $image) {
         return $this->db->addNews($title, $text, $image);
     }
+
+    public function deleteNews($id) {
+        return $this->db->deleteNews($id);
+    }
 }

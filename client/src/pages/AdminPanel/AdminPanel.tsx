@@ -101,6 +101,15 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
         }
     };
 
+    const deleteNews = async (id: number) => {
+        const response = await server.deleteNews(id);
+        if (response) {
+            alert('Новость успешно удалена');
+        } else {
+            alert('Ошибка при удалении новости');
+        }
+    }
+
     if (user && user.role !== 'admin') {
         return <div>Доступ запрещен</div>;
     }

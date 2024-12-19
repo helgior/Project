@@ -86,12 +86,25 @@ class Application {
         }
         return ['error' => 242];
     }
-    public function updateBanner($params) {
-        if ($params['id'] && isset($params['hidden'])) {
-            return $this->news->updateBanner($params['id'], $params['hidden']);
+
+    // Метод для обработки входных данных и вызова обновления баннера
+    public function handleUpdateBannerRequest($params) {
+        // Проверяем, что обязательные параметры переданы
+        if (!isset($params['id'], $params['hidden'])) {
+            return ['error' => 'Missing required parameters: id and hidden'];
         }
-        return ['error' => 242];
+        // Валидация входных данных (можно расширить в зависимости от требований)
+        $id = (int)$params['id'];
+        $hidden = (bool)$params['hidden'];
+        // Попытка обновления баннера
+        $result = $this->updateBanner($id, $hidden);
+        // Проверяем результат выполнения и возвращаем ответ
+        if ($result) {
+            return ['success' => true, 'message' => 'Banner updated successfully'];
+        }
+        return ['error' => 'Failed to update banner'];
     }
+    
     public function setBannerOrder($params) {
         if ($params['id'] && isset($params['priority'])) {
             return $this->news->setBannerOrder($params['id'], $params['priority']);

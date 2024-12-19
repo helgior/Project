@@ -16,7 +16,8 @@ class News {
         return $this->db->deleteBanner($id);
     }
     public function updateBanner($id, $hidden) {
-        return $this->db->updateBanner($id, $hidden);
+        // Перенаправляем на метод db->updateBanner для работы с базой данных через POST-запрос
+        return $this->db->execute("UPDATE banners SET hidden = ? WHERE id = ?", [$hidden, $id]);
     }
     public function setBannerOrder($id, $priority) {
         return $this->db->setBannerOrder($id, $priority);

@@ -118,6 +118,17 @@ class Server {
     updateBanner(id: number, hidden: boolean): Promise<boolean | null> {
         return this.request<boolean>('updateBanner', { id: id.toString(), hidden: hidden.toString() });
     }
+
+
+    createRequest(id: number, hidden: boolean): Promise<boolean | null> {
+        return this.request<boolean>('createRequest', { id: id.toString(), hidden: hidden.toString() });
+    }
+    getRequest(): Promise<TBanner[] | null> {
+        return this.request<TBanner[]>('getRequest');
+    }
+    answerToRequest(id: number, status_id: number): Promise<boolean | null> {
+        return this.request<boolean>('answerToRequest', { id: id.toString(), status_id: status_id.toString() });
+    }
     
 }
 

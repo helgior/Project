@@ -92,4 +92,25 @@ class Application {
         }
         return ['error' => 242];
     }
+    
+    public function createRequest($params) {
+        if ($params['user_id'] && $params['category_id'] && $params['flat_id'] &&
+            $params['status_id'] && $params['description'] && $params['priority'] && $params['date']) {
+            return $this->news->createRequest(
+            $params['user_id'] && $params['category_id'] && $params['flat_id'] && 
+            $params['status_id'] && $params['description'] &&$params['priority'] && $params['date']);
+        }
+        return ['error' => 341];
+    }
+
+    public function getRequest($params) {
+        return $this->news->getRequest();
+    }
+
+    public function answerToRequest($params) {
+        if ($params['id'] && isset($params['status_id'])) {
+            return $this->news->answerToRequest($params['id'], $params['status_id']);
+        }
+        return ['error' => 342];
+    }
 }

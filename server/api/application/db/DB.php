@@ -76,5 +76,15 @@ class DB {
     public function updateBanner($id, $hidden) {
         return $this->execute("UPDATE banners SET hidden=? WHERE id=?", [$hidden, $id]);
     }
-    
+    public function createRequest($user_id, $category_id, $flat_id, $status_id, $description, $priority, $date) {
+        return $this->execute("INSERT INTO request (user_id, category_id, status_id, 
+        description, priority, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+         [user_id, $category_id, $flat_id, $status_id, $description, $priority, $date]);
+    }
+    public function getRequest() {
+        return $this->queryAll("SELECT * FROM request");
+    }
+    public function answerToRequest($id, $status_id) {
+        return $this->execute("UPDATE request SET status_id=? WHERE id=?", [$status_id, $id]);
+    }
 }

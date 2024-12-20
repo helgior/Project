@@ -1,4 +1,5 @@
-import { type } from "os";
+import { type } from "os" ;
+import datetime from "react-datetime";
 
 export type TError = {
     code: number;
@@ -40,4 +41,19 @@ export type TBanner = {
     hidden: boolean;
 }
 
+export type TRequest = {
+    id: number;
+    user_id: number;
+    category_id: number;
+    flat_id: number;
+    status_id: number;
+    description: string;
+    priority: 'high' | 'medium' | 'low';
+    date: datetime;
+}
 
+export type TStatus = {
+    id: number;
+    name: string;
+    type: string;
+}

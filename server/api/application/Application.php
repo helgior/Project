@@ -104,12 +104,12 @@ class Application {
     }
 
     public function getRequest($params) {
-        return $this->news->getRequest();
+        return $this->request->getRequest();
     }
 
     public function answerToRequest($params) {
         if ($params['id'] && isset($params['status_id'])) {
-            return $this->news->answerToRequest($params['id'], $params['status_id']);
+            return $this->request->answerToRequest($params['id'], $params['status_id']);
         }
         return ['error' => 342];
     }

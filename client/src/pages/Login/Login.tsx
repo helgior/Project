@@ -5,40 +5,21 @@ import { IBasePage, PAGES } from "../PageManager";
 import "./Login.scss";
 import Footer from "../../components/Footer/Footer";
 import Menu from "../../components/Menu/Menu";
-import {
-  handlePhoneInput,
-  validatePassword,
-  validatePhone,
-} from "../../services/utils/validation";
+import { InputType, useFormattedInput } from "../../hooks/useFormattedInput";
+import { validators } from "../../utils/validators";
 
 const Login: React.FC<IBasePage> = ({ setPage }) => {
   const server = useContext(ServerContext);
-  const loginRef = useRef<HTMLInputElement>(null);
+  const phoneRef = useFormattedInput(validators[InputType.Phone]);
   const passwordRef = useRef<HTMLInputElement>(null);
 
-  const loginClickHandler = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (loginRef.current && passwordRef.current) {
-      const login = loginRef.current.value;
+  const loginClickHandler = async () => {
+    if (phoneRef.current && passwordRef.current) {
+      const login = phoneRef.current.value;
       const password = passwordRef.current.value;
-
-      console.log("Login input:", login);
-      console.log("Password input:", password);
-
-      if (!validatePhone(login)) {
-        alert("Введите корректный номер телефона в формате +7XXXXXXXXXX");
-        return;
-      }
-
-      if (!validatePassword(password)) {
-        alert("Пароль должен быть не менее 5 символов");
-        return;
-      }
 
       if (await server.login(login, password)) {
         setPage(PAGES.MAIN);
-      } else {
-        alert("Неверный логин или пароль");
       }
     }
   };
@@ -50,19 +31,13 @@ const Login: React.FC<IBasePage> = ({ setPage }) => {
         <div className="wrapper">
           <div className="signAction__container">
             <h1 className="title--2">Вход в личный кабинет</h1>
-            <form
-              action=""
-              className="signAction__form"
-              onSubmit={loginClickHandler}
-            >
+            <div className="signAction__form">
               <div className="form__block">
                 <label className="text--bold">Номер телефона</label>
                 <input
-                  ref={loginRef}
-                  type="text"
+                  ref={phoneRef}
                   className="text--bold form__input"
                   placeholder="+7 9** *** - ** - **"
-                  onInput={handlePhoneInput}
                 />
               </div>
               <div className="form__block">
@@ -74,7 +49,7 @@ const Login: React.FC<IBasePage> = ({ setPage }) => {
                   placeholder="**********"
                 />
               </div>
-              <button className="btn form__button" type="submit">
+              <button className="btn form__button" onClick={loginClickHandler}>
                 Войти
               </button>
               <p className="text--bold form__text">
@@ -87,7 +62,7 @@ const Login: React.FC<IBasePage> = ({ setPage }) => {
                   Создайте её здесь
                 </a>
               </p>
-            </form>
+            </div>
           </div>
         </div>
       </main>

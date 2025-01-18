@@ -1,20 +1,48 @@
-.login {
-
-    &-inputs {
-        display: flex;
-        flex-direction: column;
-
-        input {
-            margin: 10px;
-            padding: 0 10px 5px 10px;
-            background-color: aquamarine;
-            width: 300px;
-        }
-    }
-
-    &-buttons {
-        display: flex;
-        justify-content: space-between;
-        max-width: 500px;
-    }
+/* SignAction */
+.signAction {
+  margin-top: 204px;
+  &__container {
+    display: flex;
+    flex-direction: column;
+  }
+  &__form {
+    margin-top: 60px;
+    border-radius: 15px;
+    border: 0.5px solid rgba(34, 0, 0, 0.5);
+    background: rgba(254, 0, 0, 0.01);
+    box-shadow: 3px 6px 18.5px 0px rgba(0, 0, 0, 0.05);
+    max-width: 1000px;
+    width: 100%;
+    padding: 43px 125px;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+  }
+  &__form .form__block:first-child {
+    margin-top: 0;
+  }
+  &__form .form__block {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  &__form .form__input {
+    margin-left: auto;
+    border-radius: 10px;
+    border: 0.5px solid rgba(34, 0, 0, 0.5);
+    width: 500px;
+    padding: 14px 20px;
+  }
+  &__form .form__button {
+    margin-top: 20px;
+    align-self: center;
+  }
+  &__form .form__text {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    align-self: center;
+  }
 }

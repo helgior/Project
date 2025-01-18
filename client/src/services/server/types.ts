@@ -17,8 +17,6 @@ export type TUser = {
     role: 'user' | 'admin' | 'executor'; // Обновите тип роли
 }
 
-
-
 export type TMessage = {
     message: string;
     author: string;

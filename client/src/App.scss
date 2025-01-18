@@ -1,53 +1,6 @@
-@use './scss/variables.scss' as *;
+@use './scss/components.scss' as *;
 
 @font-face {
     font-family: 'Play';
     src: url('./assets/fonts/Play-Regular.ttf') format('truetype');
-}
-
-// Основной контейнер приложения
-.app {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-
-    background-color: $main-theme;
-    color: $text-color;
-
-    padding: 20px;
-    margin: 10px;
-
-    border: solid $button-border-color 3px;
-    border-radius: $border-radius;
-
-    // Анимация при наведении
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-    &:hover {
-        transform: scale(1.02);
-        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-    }
-}
-
-// Абсолютное позиционирование
-.absolute {
-    position: absolute;
-    top: 0;
-    right: 1rem;
-
-    background-color: $button-background-color;
-    padding: 5px 10px;
-    border-radius: $border-radius;
-    color: $text-color;
-
-    // Анимация при наведении
-    transition: background-color 0.3s ease;
-
-    &:hover {
-        background-color: $button-hover-color;
-        cursor: pointer;
-    }
 }

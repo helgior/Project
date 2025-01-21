@@ -41,11 +41,6 @@ function result($params) {
             case 'getRequests': return $app->getRequests($params); // Кожевников
             case 'answerToRequest': return $app->answerToRequest($params); // Широбоков
 
-            case 'getAppeals': return $app->getAppeals($params);
-            case 'createAppeal': return $app->createAppeal($params);
-            case 'updateAppealStatus': return $app->updateAppealStatus($params);
-            case 'assignExecutor': return $app->assignExecutor($params);
-
             default: return ['error' => 102];
         }
     }

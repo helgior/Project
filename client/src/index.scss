@@ -1,12 +1,17 @@
 @charset 'utf-8';
 
+$font-size: 30px; // Базовый размер шрифта для разрешения 1920x1080
+
 // === Импорт переменных и базовых стилей ===
-@import './scss/components.scss';
+@import './scss/variables';
 
 body {
     overflow: hidden;
+    background-color: $main-theme;
+    color: $text-color;
     margin: 0;
     padding: 0;
+    font-size: $font-size;
     font-family: 'Play', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 
         'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -21,7 +26,11 @@ body {
 
 code {
     font-family: 'Courier New', source-code-pro, Menlo, Monaco, Consolas, monospace;
+    background-color: lighten($main-theme, 10%);
+    padding: 5px 10px;
+    border-radius: $border-radius;
     display: inline-block;
+    color: $accent-color;
 }
 
 * {

@@ -1,0 +1,19 @@
+@use '../../scss/variables.scss' as *;
+
+.button {
+    font-size: 1rem;
+    padding: 0.8rem 1.5rem;
+    background-color: $button-background-color;
+    color: $text-color;
+    border: 2px solid $button-border-color;
+    border-radius: $border-radius;
+    box-shadow: $shadow;
+
+    &:hover {
+        background-color: $button-hover-color;
+    }
+
+    &:active {
+        box-shadow: none;
+    }
+}

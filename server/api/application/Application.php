@@ -1,32 +1,26 @@
 <?php
-require_once('db/DB.php');
-require_once('user/User.php');
-require_once('chat/Chat.php');
-require_once('news/News.php');
-require_once('appeals/Appeals.php');
+require_once ('db/DB.php');
+require_once ('user/User.php');
+require_once ('chat/Chat.php');
+require_once ('news/News.php');
 
-class Application
-{
-    function __construct()
-    {
+class Application {
+    function __construct() {
         $db = new DB();
         $this->user = new User($db);
         $this->chat = new Chat($db);
         $this->news = new News($db);
-        $this->appeals = new Appeals($db);
         $this->db = $db;
     }
 
-    public function login($params)
-    {
+    public function login($params) {
         if ($params['login'] && $params['hash'] && $params['rnd']) {
             return $this->user->login($params['login'], $params['hash'], $params['rnd']);
         }
         return ['error' => 242];
     }
 
-    public function logout($params)
-    {
+    public function logout($params) {
         if ($params['token']) {
             $user = $this->user->getUser($params['token']);
             if ($user) {
@@ -37,16 +31,14 @@ class Application
         return ['error' => 242];
     }
 
-    public function registration($params)
-    {
-        if ($params['login'] && $params['password'] && $params['name'] && $params['surname'] && $params['role']) {
-            return $this->user->registration($params['login'], $params['password'], $params['name'], $params['surname'], $params['role']);
+    public function registration($params) {
+        if ($params['login'] && $params['password'] && $params['name']) {
+            return $this->user->registration($params['login'], $params['password'], $params['name']);
         }
         return ['error' => 242];
     }
 
-    public function sendMessage($params)
-    {
+    public function sendMessage($params) {
         if ($params['token'] && $params['message']) {
             $user = $this->user->getUser($params['token']);
             if ($user) {
@@ -57,8 +49,7 @@ class Application
         return ['error' => 242];
     }
 
-    public function getMessages($params)
-    {
+    public function getMessages($params) {
         if ($params['token'] && $params['hash']) {
             $user = $this->user->getUser($params['token']);
             if ($user) {
@@ -69,94 +60,51 @@ class Application
         return ['error' => 242];
     }
 
-    public function getBanners($params)
-    {
+    public function getBanners($params) {
         return $this->news->getBanners();
     }
 
-    public function getMaps($params)
-    {
+    public function getMaps($params) {
         return $this->db->getMaps();
     }
 
-    public function addMap($params)
-    {
+    public function addMap($params) {
         if ($params['streetName'] && $params['coordinates'] && $params['houses']) {
             return $this->db->addMap($params['streetName'], $params['coordinates'], $params['houses']);
         }
         return ['error' => 242];
     }
-
-    public function addBanner($params)
-    {
+    public function addBanner($params) {
         if ($params['title'] && $params['image'] && $params['url']) {
             return $this->news->addBanner($params['title'], $params['text'], $params['image'], $params['url']);
         }
         return ['error' => 242];
     }
-
-    public function deleteBanner($params)
-    {
+    public function deleteBanner($params) {
         if ($params['id']) {
             return $this->news->deleteBanner($params['id']);
         }
         return ['error' => 242];
     }
-
-    public function updateBanner($params)
-    {
+    public function updateBanner($params) {
         if ($params['id'] && isset($params['hidden'])) {
             return $this->news->updateBanner($params['id'], $params['hidden']);
         }
         return ['error' => 242];
     }
-
-    public function setBannerOrder($params)
-    {
+    public function setBannerOrder($params) {
         if ($params['id'] && isset($params['priority'])) {
             return $this->news->setBannerOrder($params['id'], $params['priority']);
         }
         return ['error' => 242];
     }
-
-    public function getNews($params)
-    {
+    public function getNews($params) {
         return $this->news->getNews();
     }
-
-    public function addNews($params)
-    {
+    
+    public function addNews($params) {
         if ($params['title'] && $params['text']) {
             return $this->news->addNews($params['title'], $params['text'], $params['image']);
-        }
-        return ['error' => 242];
-    }
-
-    public function getAppeals($params)
-    {
-        return $this->appeals->getAppeals();
-    }
-
-    public function createAppeal($params)
-    {
-        if ($params['user_id'] && $params['category']) {
-            return $this->appeals->addAppeal($params['user_id'], $params['category'], $params['comment']);
-        }
-        return ['error' => 242];
-    }
-
-    public function updateAppealStatus($params)
-    {
-        if ($params['id'] && $params['status']) {
-            return $this->appeals->updateAppealStatus($params['id'], $params['status']);
-        }
-        return ['error' => 242];
-    }
-
-    public function assignExecutor($params)
-    {
-        if ($params['id'] && $params['executor_id']) {
-            return $this->appeals->assignExecutor($params['id'], $params['executor_id']);
         }
         return ['error' => 242];
     }

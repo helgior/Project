@@ -9,9 +9,6 @@ import NotFound from './NotFound/NotFound';
 import Maps from './Maps/Maps';
 import NewsPage from './News/NewsPage';
 import AdminPanel from './AdminPanel/AdminPanel';
-import Registration from './Registration/Registration';
-import AppealsExecutor from './Appeals/AppealsExecutor';
-import AppealsUser from './Appeals/AppealsUser';
 
 export enum PAGES {
     PRELOADER,
@@ -22,10 +19,7 @@ export enum PAGES {
     NOT_FOUND,
     MAPS,
     ADMIN_PANEL,
-    NEWS,
-    REGISTRATION,
-    APPEALSEXECUTOR,
-    APPEALSUSER,
+    NEWS
 }
 
 export interface IBasePage {
@@ -46,9 +40,6 @@ const PageManager: React.FC = () => {
             {page === PAGES.MAPS && <NotFound setPage={setPage} />}
             {page === PAGES.ADMIN_PANEL && <AdminPanel setPage={setPage} />}
             {page === PAGES.NEWS && <NewsPage setPage={setPage} />}
-            {page === PAGES.REGISTRATION && <Registration setPage={setPage} />}
-            {page === PAGES.APPEALSEXECUTOR && <AppealsExecutor setPage={setPage} />}
-            {page === PAGES.APPEALSUSER && <AppealsUser setPage={setPage} />}
         </>
     );
 }

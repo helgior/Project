@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
-// import { MapContainer, TileLayer, Polyline, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Polyline, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
-// const getStreetColor = (houses) => {
-//     const activeCount = houses.filter(house => house === 1).length;
-//     if (activeCount === 3) {
-//         return 'green';
-//     } else if (activeCount === 2) {
-//         return 'yellow';
-//     } else {
-//         return 'red';
-//     }
-// };
+const getStreetColor = (houses) => {
+    const activeCount = houses.filter(house => house === 1).length;
+    if (activeCount === 3) {
+        return 'green';
+    } else if (activeCount === 2) {
+        return 'yellow';
+    } else {
+        return 'red';
+    }
+};
 
 const Maps = () => {
     const [streets, setStreets] = useState([]);
@@ -25,7 +25,7 @@ const Maps = () => {
 
     return (
         <div>
-            {/* <h1>Карта села Завьялово</h1>
+            <h1>Карта села Завьялово</h1>
             <MapContainer center={[56.838, 53.367]} zoom={15} style={{ height: "600px", width: "100%" }}>
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -59,7 +59,7 @@ const Maps = () => {
                         </Polyline>
                     );
                 })}
-            </MapContainer> */}
+            </MapContainer>
         </div>
     );
 };

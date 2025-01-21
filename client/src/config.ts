@@ -21,8 +21,8 @@ const CONFIG = {
     // dev
     // HOST: 'http://webjek/api',
     // UdSU
-    STATIC: 'http://webjek:81/public/',
-    HOST: 'http://webjek:81/api',
+    STATIC: 'http://webjek:80/public/',
+    HOST: 'http://webjek:80/api',
 
     CHAT_TIMESTAMP: 200, //ms
 
@@ -37,6 +37,8 @@ const CONFIG = {
         HEIGHT: 12,
         WIDTH: 20,
     },
+
+    USE_MOCK_DATA: true,
 };
 
 export default CONFIG;

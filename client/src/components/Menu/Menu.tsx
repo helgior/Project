@@ -64,11 +64,6 @@ const Menu: React.FC<IBasePage> = (props: IBasePage) => {
             <nav className="header__nav">
               <ul className="nav__list">
                 <li className="list__item">
-                  <a href="#" className="text--main">
-                    Обращения
-                  </a>
-                </li>
-                <li className="list__item">
                   <a
                     href="#"
                     className="text--main"
@@ -77,15 +72,50 @@ const Menu: React.FC<IBasePage> = (props: IBasePage) => {
                     Новости
                   </a>
                 </li>
-                <li className="list__item">
-                  <a
-                    href="#"
-                    className="text--main"
-                    onClick={() => setPage(PAGES.LOGIN)}
-                  >
-                    Авторизация
-                  </a>
-                </li>
+                {!user && (
+                  <li className="list__item">
+                    <a
+                      href="#"
+                      className="text--main"
+                      onClick={() => setPage(PAGES.LOGIN)}
+                    >
+                      Авторизация
+                    </a>
+                  </li>
+                )}
+                {user?.role === "user" && (
+                  <li className="list__item">
+                    <a
+                      href="#"
+                      className="text--main"
+                      onClick={() => setPage(PAGES.APPEALSUSER)}
+                    >
+                      Обращения
+                    </a>
+                  </li>
+                )}
+                {user?.role === "executor" && (
+                  <li className="list__item">
+                    <a
+                      href="#"
+                      className="text--main"
+                      onClick={() => setPage(PAGES.APPEALSEXECUTOR)}
+                    >
+                      Обращения
+                    </a>
+                  </li>
+                )}
+                {user?.role === "admin" && (
+                  <li className="list__item">
+                    <a
+                      href="#"
+                      className="text--main"
+                      onClick={() => setPage(PAGES.ADMIN_PANEL)}
+                    >
+                      Админ-панель
+                    </a>
+                  </li>
+                )}
               </ul>
             </nav>
           </div>

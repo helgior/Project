@@ -11,12 +11,14 @@
   align-items: flex-start;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+  transition: opacity 2s ease-in-out, visibility 2s ease-in-out;
 }
+
 .banner__container.active {
   opacity: 1;
   visibility: visible;
 }
+
 .banner__info {
   margin-top: 42px;
   display: flex;
@@ -28,9 +30,11 @@
   z-index: 1;
   max-width: 519px;
 }
+
 .banner__info .info__text {
   max-width: 428px;
 }
+
 .banner__button {
   margin-top: -20px;
   color: #fff;
@@ -42,6 +46,7 @@
   box-shadow: 0px 4px 18px 0px rgba(57, 14, 5, 0.4);
   padding: 13px 75px;
 }
+
 .banner__form {
   position: absolute;
   top: 80px;
@@ -57,6 +62,7 @@
   flex-direction: column;
   gap: 20px;
 }
+
 .banner__form .form__button {
   margin-top: 10px;
   display: flex;
@@ -73,6 +79,7 @@
   width: 100%;
   padding: 13px 0px;
 }
+
 .banner__img {
   position: absolute;
   top: 0px;
@@ -82,6 +89,7 @@
   object-fit: cover;
   border-radius: 10px;
 }
+
 .banner__container::before {
   content: "";
   position: absolute;

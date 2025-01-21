@@ -8,8 +8,7 @@ import Menu from "../../components/Menu/Menu";
 import { InputType, useFormattedInput } from "../../hooks/useFormattedInput";
 import { validators } from "../../utils/validators";
 
-const Registration: React.FC<IBasePage> = (props: IBasePage) => {
-  const { setPage } = props;
+const Registration: React.FC<IBasePage> = ({ setPage }) => {
   const server = useContext(ServerContext);
   const nameRef = useFormattedInput(validators[InputType.Name]);
   const surnameRef = useFormattedInput(validators[InputType.Name]);
@@ -28,9 +27,9 @@ const Registration: React.FC<IBasePage> = (props: IBasePage) => {
       const login = phoneRef.current.value;
       const password = passwordRef.current.value;
 
-      if (
-        await server.registration(login, password, name, surname, login, "user")
-      ) {
+      const success = await server.registration(login, password, name, surname, "user");
+
+      if (success) {
         setPage(PAGES.LOGIN);
       }
     }
@@ -42,7 +41,7 @@ const Registration: React.FC<IBasePage> = (props: IBasePage) => {
       <main className="signAction">
         <div className="wrapper">
           <div className="signAction__container">
-            <h1 className="title--2">Регистирация</h1>
+            <h1 className="title--2">Регистрация</h1>
             <div className="signAction__form signUp__form">
               <div className="form__block">
                 <label className="text--bold">Имя</label>

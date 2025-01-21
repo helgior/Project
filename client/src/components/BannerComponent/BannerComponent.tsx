@@ -8,20 +8,15 @@ interface IBannerProps {
 }
 
 const BannerComponent: React.FC<IBannerProps> = ({ data, active }) => {
-  const { title, text, image, url, hidden } = data;
+  const { title, text, image, hidden } = data;
 
-  if (hidden) return null; // Пропускаем скрытые баннеры
+  if (hidden) return null;
 
   return (
     <div className={`banner__container ${active ? "active" : ""}`}>
       <div className="banner__info">
         <h1 className="text--1">{title}</h1>
-        <p className="text--bold info__text">{text || "Описание отсутствует"}</p>
-        {url && (
-          <a href={url} className="banner__button">
-            Подробнее
-          </a>
-        )}
+        <p className="text--bold info__text">{text}</p>
       </div>
       <img src={image} alt={title} className="banner__img" />
     </div>

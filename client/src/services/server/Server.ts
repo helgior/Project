@@ -8,6 +8,7 @@ import {
   TMessagesResponse,
   TUser,
   TNews,
+  TAppeal,
 } from "./types";
 
 const { CHAT_TIMESTAMP, HOST } = CONFIG;
@@ -64,7 +65,7 @@ class Server {
 
   async login(login: string, password: string): Promise<boolean> {
     const rnd = Math.round(Math.random() * 100000);
-    const hash = md5(`${md5(`${login}${password}`)}${rnd}`);
+    const hash = md5(password + rnd);
     const user = await this.request<TUser>("login", {
       login,
       hash,
@@ -93,16 +94,13 @@ class Server {
     password: string,
     name: string,
     surname: string,
-    phone: string,
     role: "user" | "admin" | "executor"
   ): Promise<boolean | null> {
-    const hash = md5(`${login}${password}`);
     return this.request<boolean>("registration", {
       login,
-      hash,
+      password,
       name,
       surname,
-      phone,
       role,
     });
   }
@@ -174,6 +172,48 @@ class Server {
 
   addNews(title: string, text: string, image: string): Promise<boolean | null> {
     return this.request<boolean>("addNews", { title, text, image });
+  }
+
+  getAppeals(): Promise<TAppeal[] | null> {
+    return this.request<TAppeal[]>("getAppeals");
+  }
+
+  addAppeal(
+    userId: number,
+    category: "Сантехника" | "Электрика" | "Функциональность веб-сайта",
+    comment: string
+  ): Promise<boolean | null> {
+    return this.request<boolean>("addAppeal", {
+      userId: userId.toString(),
+      category,
+      comment,
+    });
+  }
+
+  updateAppealStatus(
+    appealId: number,
+    status: string
+  ): Promise<boolean | null> {
+    return this.request<boolean>("updateAppealStatus", {
+      appealId: appealId.toString(),
+      status,
+    });
+  }
+
+  assignExecutor(
+    appealId: number,
+    executorId: number
+  ): Promise<boolean | null> {
+    return this.request<boolean>("assignExecutor", {
+      appealId: appealId.toString(),
+      executorId: executorId.toString(),
+    });
+  }
+
+  deleteAppeal(appealId: number): Promise<boolean | null> {
+    return this.request<boolean>("deleteAppeal", {
+      appealId: appealId.toString(),
+    });
   }
 }
 

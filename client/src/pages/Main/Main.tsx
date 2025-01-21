@@ -16,6 +16,10 @@ const Main: React.FC<IBasePage> = ({ setPage }) => {
   const { banners, setBanners } = useBannerContext();
   const [currentBanner, setCurrentBanner] = useState(0);
 
+  const visibleBanners = banners
+    ? banners.filter((banner) => !banner.hidden)
+    : [];
+
   useEffect(() => {
     (async () => {
       if (!banners) {
@@ -26,14 +30,14 @@ const Main: React.FC<IBasePage> = ({ setPage }) => {
   }, [banners, server, setBanners]);
 
   useEffect(() => {
+    if (visibleBanners.length === 0) return;
+
     const interval = setInterval(() => {
-      setCurrentBanner((prev) =>
-        banners ? (prev + 1) % banners.length : 0
-      );
-    }, 3000);
+      setCurrentBanner((prev) => (prev + 1) % visibleBanners.length);
+    }, 4000);
 
     return () => clearInterval(interval);
-  }, [banners]);
+  }, [visibleBanners]);
 
   return (
     <>
@@ -42,7 +46,7 @@ const Main: React.FC<IBasePage> = ({ setPage }) => {
         <section className="main__window">
           <div className="wrapper">
             <div className="banners">
-              {banners?.map((banner, index) => (
+              {visibleBanners?.map((banner, index) => (
                 <BannerComponent
                   key={banner.id}
                   data={banner}

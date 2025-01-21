@@ -18,7 +18,9 @@ const Login: React.FC<IBasePage> = ({ setPage }) => {
       const login = phoneRef.current.value;
       const password = passwordRef.current.value;
 
-      if (await server.login(login, password)) {
+      const success = await server.login(login, password);
+
+      if (success) {
         setPage(PAGES.MAIN);
       }
     }

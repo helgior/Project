@@ -24,6 +24,8 @@ class Answer {
         '1001' => 'params login or password not set',
         '1005' => 'Other user is playing wright now. If you doesn`t, please change the password',
         '1006' => 'user with this email is already registered',
+        '1007' => 'Invalid appeal ID',
+        '1008' => 'Invalid executor ID',
         '9000' => 'unknown error'
     );
 

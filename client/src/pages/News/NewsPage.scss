@@ -1,0 +1,96 @@
+.promotions-news {
+  .promotions-news-content {
+    margin-top: 225px;
+    &__container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 40px;
+    }
+    &__cards {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 40px 30px;
+      justify-content: center;
+    }
+  }
+  &__button {
+    align-self: center;
+    transition: all 0.3s ease-in-out;
+  }
+  &__button:hover {
+    padding-bottom: 6px;
+    border-bottom: 1px solid #000;
+  }
+  &__card {
+    max-width: 400px;
+    width: 100%;
+    border-radius: 5px;
+    border: 0.3px solid rgba(0, 0, 0, 0.3);
+    background: #fefefe;
+    box-shadow: 0px 3px 3px 2px rgba(196, 196, 196, 0.25);
+    .card__img {
+      width: 100%;
+      border-radius: 5px 5px 0px 0px;
+      height: 260px;
+    }
+    .card__img img {
+      border-radius: 5px 5px 0px 0px;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .card__info {
+      padding: 20px 15px 23px 15px;
+    }
+    .card__info .info__title {
+      color: #d73020;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card__info .info__desc {
+      margin-top: 10px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card__info .info__block {
+      margin-top: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card__info .info__block .block__text {
+      color: rgba(0, 0, 0, 0.6);
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 125%;
+    }
+    .card__info .info__button {
+      margin-top: 25px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      color: #26349b;
+      width: fit-content;
+      transition: all 0.3s ease-in-out;
+    }
+    .card__info .info__button svg {
+      transition: all 0.3s ease-in-out;
+    }
+    .card__info .info__button:hover {
+      color: #141847;
+      font-weight: 600;
+    }
+    .card__info .info__button:hover svg {
+      stroke: #141847;
+      stroke-width: 2;
+      stroke-linecap: round;
+    }
+  }
+}

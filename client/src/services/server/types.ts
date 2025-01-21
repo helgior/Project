@@ -1,52 +1,62 @@
 import { type } from "os";
 
 export type TError = {
-    code: number;
-    text: string;
-}
+  code: number;
+  text: string;
+};
 
 export type TAnswer<T> = {
-    result: 'ok' | 'error';
-    data?: T;
-    error?: TError;
-}
+  result: "ok" | "error";
+  data?: T;
+  error?: TError;
+};
 
 export type TUser = {
-    token: string;
-    name: string;
-    role: 'user' | 'admin' | 'executor'; // Обновите тип роли
-}
-
-
+  token: string;
+  surname: string;
+  login: string;
+  name: string;
+  role: "user" | "admin" | "executor";
+};
 
 export type TMessage = {
-    message: string;
-    author: string;
-    created: string;
-}
+  message: string;
+  author: string;
+  created: string;
+};
 
 export type TMessages = TMessage[];
 export type TMessagesResponse = {
-    messages: TMessages;
-    hash: string;
-}
+  messages: TMessages;
+  hash: string;
+};
 
 export type TBanner = {
-    id: number;
-    title: string;
-    text: string | null;
-    image: string;
-    url: string;
-    hidden: boolean;
-    priority: number;
-}
+  id: number;
+  title: string;
+  text: string | null;
+  image: string;
+  hidden: boolean;
+  priority: number;
+};
+
 export type TNews = {
-    id: number;
-    title: string;
-    text: string;
-    image: string | null;
-    date: string;
-}
+  id: number;
+  title: string;
+  text: string;
+  image: string | null;
+  date: string;
+};
 
+export type TAppeal = {
+  status: "В ожидании" | "В работе" | "Завершено" | "Отменен";
+  id: number;
+  user: TUser;
+  executorId: number | null;
+  comment: string | null;
+  category: "Сантехника" | "Электрика" | "Функциональность веб-сайта";
+};
 
-
+export type TAppealResponse = {
+  appeals: TAppeal[];
+};

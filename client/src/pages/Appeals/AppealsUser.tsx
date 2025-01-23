@@ -1,33 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { StoreContext, ServerContext } from "../../App";
 import { IBasePage } from "../PageManager";
 import Menu from "../../components/Menu/Menu";
 import Footer from "../../components/Footer/Footer";
+import { TAppeal } from "../../services/server/types";
 
 import "./Appeals.scss";
-
 import closeIcon from "../../assets/img/close-icon.svg";
-
-const mockAppeals = [
-  {
-    id: 1,
-    firstName: "Иван",
-    lastName: "Иванов",
-    phone: "+7 (900) 123-45-67",
-    comment: "Не работает форма регистрации.",
-    category: "Функционал сайта",
-    status: "В ожидании",
-  },
-  {
-    id: 2,
-    firstName: "Мария",
-    lastName: "Петрова",
-    phone: "+7 (900) 987-65-43",
-    comment: "Ошибка при оформлении заказа.",
-    category: "Функционал сайта",
-    status: "В ожидании",
-  },
-];
 
 const AppealsUser: React.FC<IBasePage> = (props: IBasePage) => {
   const { setPage } = props;
@@ -35,23 +14,75 @@ const AppealsUser: React.FC<IBasePage> = (props: IBasePage) => {
   const server = useContext(ServerContext);
   const user = store.getUser();
 
+  const [appeals, setAppeals] = useState<TAppeal[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSelectorOpen, setIsSelectorOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [comment, setComment] = useState("");
 
-  const categories = ["Сантехника", "Электрика", "Функционал сайта"];
+  const categories = ["Сантехника", "Электрика", "Функциональность веб-сайта"];
 
-  if (user && user.role !== "user") {
+  useEffect(() => {
+    fetchAppeals();
+  }, []);
+
+  const fetchAppeals = async () => {
+    if (!user) return;
+  
+    const fetchedAppeals = await server.getAppeals();
+  
+    if (fetchedAppeals) {
+      fetchedAppeals.forEach((appeal) => {
+        console.log('Appeal User ID:', appeal.user.id);
+      });
+      console.log('Current User ID:', user.id);
+  
+      setAppeals(fetchedAppeals.filter(appeal => appeal.user.id === user.id));
+    }
+  };
+  
+
+  if (!user || user.role !== "user") {
     return <div>Доступ запрещен</div>;
   }
 
-  const toggleModal = () => setIsModalOpen((prev) => !prev);
+  const toggleModal = () => {
+    setIsModalOpen(prev => !prev);
+    if (!isModalOpen) {
+      setSelectedCategory(null);
+      setComment("");
+    }
+  };
 
-  const toggleSelector = () => setIsSelectorOpen((prev) => !prev);
+  const toggleSelector = () => setIsSelectorOpen(prev => !prev);
 
   const selectCategory = (category: string) => {
     setSelectedCategory(category);
     setIsSelectorOpen(false);
+  };
+
+  const handleSubmit = async () => {
+    if (!selectedCategory || !user) return;
+    
+    const success = await server.addAppeal(
+      user.id,
+      selectedCategory as "Сантехника" | "Электрика" | "Функциональность веб-сайта",
+      comment
+    );
+
+    if (success) {
+      await fetchAppeals();
+      toggleModal();
+    }
+  };
+
+  const handleDelete = async (appealId: number) => {
+    if (window.confirm("Вы уверены, что хотите удалить это обращение?")) {
+      const success = await server.deleteAppeal(appealId);
+      if (success) {
+        await fetchAppeals();
+      }
+    }
   };
 
   return (
@@ -90,8 +121,14 @@ const AppealsUser: React.FC<IBasePage> = (props: IBasePage) => {
               <textarea
                 className="form__textarea"
                 placeholder="Комментарий о проблеме"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
               ></textarea>
-              <button className="formPopap__button">
+              <button 
+                className="formPopap__button"
+                onClick={handleSubmit}
+                disabled={!selectedCategory}
+              >
                 Отправить
               </button>
               <a href="#" className="popap__icon" onClick={toggleModal}>
@@ -116,7 +153,7 @@ const AppealsUser: React.FC<IBasePage> = (props: IBasePage) => {
             </button>
           </div>
           <div className="appeals__list">
-            {mockAppeals.map((appeal) => (
+            {appeals.map((appeal) => (
               <div className="appeal" key={appeal.id}>
                 <div className="appeal__info">
                   <div className="info__block">
@@ -125,25 +162,28 @@ const AppealsUser: React.FC<IBasePage> = (props: IBasePage) => {
                       <p className="text--main">Категория: {appeal.category}</p>
                     </div>
                     <div className="appeal__actions">
-                      <button className="button button--secondary">
+                      <button 
+                        className="button button--secondary"
+                        onClick={() => handleDelete(appeal.id)}
+                      >
                         Удалить обращение
                       </button>
                     </div>
                   </div>
-                  <div className="info__block">
-                    <p className="text--main">
-                      Фамилия, Имя исполнителя: {appeal.lastName}{" "}
-                      {appeal.firstName}
-                    </p>
-                    <p className="text--main">
-                      Телефон исполнителя: {appeal.phone}
-                    </p>
-                  </div>
-                  <div className="info__block">
-                    <p className="text--main">
-                      Комментарий исполнителя: <span>{appeal.comment}</span>
-                    </p>
-                  </div>
+                  {appeal.executorId && (
+                    <div className="info__block">
+                      <p className="text--main">
+                        Исполнитель: {appeal.user.surname} {appeal.user.name}
+                      </p>
+                    </div>
+                  )}
+                  {appeal.comment && (
+                    <div className="info__block">
+                      <p className="text--main">
+                        Комментарий: <span>{appeal.comment}</span>
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}

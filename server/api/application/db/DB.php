@@ -111,4 +111,56 @@ class DB
         return $this->execute("INSERT INTO news (title, text, image) VALUES (?, ?, ?)", [$title, $text, $image]);
     }
 
+    public function deleteAppeal($id)
+    {
+        $sql = "DELETE FROM appeals WHERE id = ?";
+        return $this->execute($sql, [$id]);
+    }
+
+    public function addAppeal($userId, $category, $comment = null)
+    {
+        $sql = "INSERT INTO appeals (user_id, category, comment, status) VALUES (?, ?, ?, 'В ожидании')";
+        return $this->execute($sql, [$userId, $category, $comment]);
+    }
+
+    public function getAppeals()
+    {
+        $query = "SELECT 
+                a.id, 
+                a.user_id, 
+                a.executor_id, 
+                a.comment, 
+                a.status, 
+                a.category,
+                u.name as user_name, 
+                u.surname as user_surname,
+                e.name as executor_name,
+                e.surname as executor_surname
+              FROM appeals a
+              JOIN users u ON a.user_id = u.id
+              LEFT JOIN users e ON a.executor_id = e.id
+              ORDER BY a.id DESC";
+
+        $sth = $this->pdo->prepare($query);
+        $sth->execute();
+        $result = $sth->fetchAll(PDO::FETCH_ASSOC);
+
+        $appeals = [];
+        foreach ($result as $row) {
+            $appeals[] = [
+                'id' => (int) $row['id'],
+                'user' => [
+                    'id' => (int) $row['user_id'],
+                    'name' => $row['user_name'],
+                    'surname' => $row['user_surname']
+                ],
+                'executorId' => $row['executor_id'] ? (int) $row['executor_id'] : null,
+                'comment' => $row['comment'],
+                'status' => $row['status'],
+                'category' => $row['category']
+            ];
+        }
+
+        return $appeals;
+    }
 }

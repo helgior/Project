@@ -181,12 +181,13 @@ class Server {
   addAppeal(
     userId: number,
     category: "Сантехника" | "Электрика" | "Функциональность веб-сайта",
-    comment: string
+    comment?: string
   ): Promise<boolean | null> {
-    return this.request<boolean>("addAppeal", {
+    return this.request<boolean>("createAppeal", {
       userId: userId.toString(),
       category,
-      comment,
+      comment: comment || "",
+      status: "В ожидании"
     });
   }
 

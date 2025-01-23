@@ -12,6 +12,7 @@ export type TAnswer<T> = {
 };
 
 export type TUser = {
+  id: number;
   token: string;
   surname: string;
   login: string;

@@ -139,8 +139,12 @@ class Application
 
     public function createAppeal($params)
     {
-        if ($params['user_id'] && $params['category']) {
-            return $this->appeals->addAppeal($params['user_id'], $params['category'], $params['comment']);
+        if ($params['userId'] && $params['category']) {
+            return $this->appeals->addAppeal(
+                $params['userId'],
+                $params['category'],
+                $params['comment'] ?? null
+            );
         }
         return ['error' => 242];
     }
@@ -159,5 +163,16 @@ class Application
             return $this->appeals->assignExecutor($params['id'], $params['executor_id']);
         }
         return ['error' => 242];
+    }
+
+    public function deleteAppeal($params)
+    {
+        $appealId = $params['appealId'] ?? null;
+        if (!$appealId) {
+            return ['result' => 'error', 'error' => ['code' => 400, 'text' => 'Appeal ID is required']];
+        }
+
+        $result = $this->appeals->deleteAppeal($appealId);
+        return ['result' => $result ? 'ok' : 'error'];
     }
 }

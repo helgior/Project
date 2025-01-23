@@ -1,0 +1,28 @@
+.main {
+  margin-top: 206px;
+}
+.banners {
+  position: relative;
+  width: 100%;
+  height: 510px;
+  overflow: hidden;
+}
+.faq {
+  margin-top: 100px;
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 40px;
+  }
+  &__list {
+    max-width: 1000px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

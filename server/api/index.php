@@ -45,6 +45,7 @@ function result($params) {
             case 'createAppeal': return $app->createAppeal($params);
             case 'updateAppealStatus': return $app->updateAppealStatus($params);
             case 'assignExecutor': return $app->assignExecutor($params);
+            case addPoint: reruen $app->addPoint($params);
 
             default: return ['error' => 102];
         }

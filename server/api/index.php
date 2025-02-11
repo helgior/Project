@@ -35,7 +35,8 @@ function result($params) {
             // для новости записывать дату
             case 'getNews': return $app->getNews($params); // Сабирова
             case 'addNews': return $app->addNews($params); // Маслова POST
-            case 'deleteNews': return $app->deleteNews($params); // Коротков
+            case 'deleteNews': return $app->deleteNews($params); // Коротков 
+            // Test commit
             case 'updateNews': return $app->updateNews($params); // Загуляев POST (уметь скрывать баннер)
             case 'createRequest': return $app->createRequest($params); // Гилазиев
             case 'getRequests': return $app->getRequests($params); // Кожевников

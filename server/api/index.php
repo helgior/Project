@@ -44,7 +44,7 @@ function result($params) {
             case 'getAppeals': return $app->getAppeals($params);
             case 'createAppeal': return $app->createAppeal($params);
             case 'updateAppealStatus': return $app->updateAppealStatus($params);
-            case 'assignExecutor': return $app->assignExecutor($params);
+            case 'assignExecutor': return $app->assignExecutor($params);//Jktu
 
             default: return ['error' => 102];
         }

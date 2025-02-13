@@ -1,0 +1,86 @@
+.header {
+  position: fixed;
+  top: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  z-index: 99;
+  &__top {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: #141847;
+    backdrop-filter: blur(15px);
+    padding: 25px;
+  }
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__city {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  &__city .city__link {
+    color: #fff;
+  }
+  &__burger {
+    display: none;
+  }
+  &__logo--mobile {
+    display: none;
+  }
+  &__time {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  &__time .time__text {
+    color: #fff;
+  }
+  &__phones {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  &__phone {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  &__phone .phone__text {
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+  }
+  &__phone .phone__text:hover {
+    border-bottom: 1px solid #fff;
+    padding-bottom: 3px;
+  }
+  &__bottom {
+    background: #fff;
+  }
+  &__container &__logo {
+    width: 220px;
+    height: 100px;
+  }
+  &__container &__logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .nav__list {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+  }
+  .nav__list .list__item {
+    list-style: none;
+  }
+  .nav__list .list__item a {
+    color: #000;
+    transition: all 0.3s ease-in-out;
+  }
+  .nav__list .list__item a:hover {
+    color: #e91a3b;
+  }
+}

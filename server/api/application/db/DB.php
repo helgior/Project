@@ -14,7 +14,7 @@ class DB
         $connect = "mysql:host=$host;port=$port;dbname=$db;charset=utf8";
         $this->pdo = new PDO($connect, $user, $pass);
 
-        // Установите режим ошибок PDO на исключения
+        // Установите режим ошибок PDO на исключений
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 

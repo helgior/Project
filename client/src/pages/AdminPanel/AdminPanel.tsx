@@ -14,7 +14,8 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
-    const [role, setRole] = useState('user');
+    const [surname, setSurname] = useState('');  // Добавляем новое поле для фамилии
+    const [role, setRole] = useState<"user" | "admin" | "executor">("user");
     const [title, setTitle] = useState('');
     const [text, setText] = useState('');
     const [image, setImage] = useState('');
@@ -33,20 +34,25 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
     }, [banners, server, setBanners]);
 
     const addUser = async () => {
-        const response = await fetch('/api/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ login, password, name, role }),
-        });
-        const result = await response.json();
-        if (result.error) {
-            alert('Ошибка при добавлении пользователя: ' + result.error);
-        } else {
+        if (!login || !password || !name || !surname || !role) {
+            alert('Пожалуйста, заполните все поля');
+            return;
+        }
+
+        const response = await server.registration(login, password, name, surname, role);
+        if (response) {
             alert('Пользователь успешно добавлен');
+            setLogin('');
+            setPassword('');
+            setName('');
+            setSurname('');
+            setRole('user');
+        } else {
+            alert('Ошибка при добавлении пользователя');
         }
     };
+
+
 
     const addBanner = async () => {
         const response = await server.addBanner(title, text, image, url);
@@ -112,7 +118,8 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
                 <input type="text" placeholder="Логин" value={login} onChange={(e) => setLogin(e.target.value)} />
                 <input type="password" placeholder="Пароль" value={password} onChange={(e) => setPassword(e.target.value)} />
                 <input type="text" placeholder="Имя" value={name} onChange={(e) => setName(e.target.value)} />
-                <select value={role} onChange={(e) => setRole(e.target.value)}>
+                <input type="text" placeholder="Фамилия" value={surname} onChange={(e) => setSurname(e.target.value)} />
+                <select value={role} onChange={(e) => setRole(e.target.value as "user" | "admin" | "executor")}>
                     <option value="user">Пользователь</option>
                     <option value="admin">Администратор</option>
                     <option value="executor">Исполнитель</option>

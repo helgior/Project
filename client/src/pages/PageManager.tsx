@@ -37,7 +37,7 @@ const PageManager: React.FC = () => {
             {page === PAGES.CHAT && <Chat setPage={setPage} />}
             {page === PAGES.GAME && <GamePage setPage={setPage} />}
             {page === PAGES.NOT_FOUND && <NotFound setPage={setPage} />}
-            {page === PAGES.MAPS && <NotFound setPage={setPage} />}
+            {page === PAGES.MAPS && <Maps setPage={setPage} />}
             {page === PAGES.ADMIN_PANEL && <AdminPanel setPage={setPage} />}
             {page === PAGES.NEWS && <NewsPage setPage={setPage} />}
         </>

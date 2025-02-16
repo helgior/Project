@@ -5,6 +5,13 @@ import Button from '../../components/Button/Button';
 import { IBasePage, PAGES } from '../../pages/PageManager';
 import { TBanner } from '../../services/server/types';
 
+import "./AdminPanel.scss";
+
+import Footer from "../../components/Footer/Footer";
+import Menu from "../../components/Menu/Menu";
+import { InputType, useFormattedInput } from "../../hooks/useFormattedInput";
+import { validators } from "../../utils/validators";
+
 const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
     const { setPage } = props;
     const store = useContext(StoreContext);
@@ -106,50 +113,54 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
     }
 
     return (
-        <div className='admin-panel'>
-            <h1>Админ панель</h1>
-            <div>
-                <input type="text" placeholder="Логин" value={login} onChange={(e) => setLogin(e.target.value)} />
-                <input type="password" placeholder="Пароль" value={password} onChange={(e) => setPassword(e.target.value)} />
-                <input type="text" placeholder="Имя" value={name} onChange={(e) => setName(e.target.value)} />
-                <select value={role} onChange={(e) => setRole(e.target.value)}>
-                    <option value="user">Пользователь</option>
-                    <option value="admin">Администратор</option>
-                    <option value="executor">Исполнитель</option>
-                </select>
-                <Button text="Добавить пользователя" onClick={addUser} />
+        <>
+            <Menu setPage={setPage} />
+            <div className='admin-panel'>
+                <h1>Админ панель</h1>
+                <div>
+                    <input type="text" placeholder="Логин" value={login} onChange={(e) => setLogin(e.target.value)} />
+                    <input type="password" placeholder="Пароль" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <input type="text" placeholder="Имя" value={name} onChange={(e) => setName(e.target.value)} />
+                    <select value={role} onChange={(e) => setRole(e.target.value)}>
+                        <option value="user">Пользователь</option>
+                        <option value="admin">Администратор</option>
+                        <option value="executor">Исполнитель</option>
+                    </select>
+                    <Button text="Добавить пользователя" onClick={addUser} />
+                </div>
+                <div>
+                    <input type="text" placeholder="Заголовок баннера" value={title} onChange={(e) => setTitle(e.target.value)} />
+                    <input type="text" placeholder="Текст баннера" value={text} onChange={(e) => setText(e.target.value)} />
+                    <input type="text" placeholder="Изображение баннера" value={image} onChange={(e) => setImage(e.target.value)} />
+                    <input type="text" placeholder="URL баннера" value={url} onChange={(e) => setUrl(e.target.value)} />
+                    <Button text="Добавить баннер" onClick={addBanner} />
+                </div>
+                <div>
+                    <h2>Список баннеров</h2>
+                    {banners && banners.map((banner: TBanner) => (
+                        <div key={banner.id}>
+                            <p>{banner.title}</p>
+                            <Button text="Удалить" onClick={() => deleteBanner(banner.id)} />
+                            <Button text={banner.hidden ? "Показать" : "Скрыть"} onClick={() => hideBanner(banner.id, !banner.hidden)} />
+                            <input
+                                type="number"
+                                placeholder="Приоритет"
+                                value={banner.priority}
+                                onChange={(e) => setBannerOrder(banner.id, parseInt(e.target.value))}
+                            />
+                        </div>
+                    ))}
+                </div>
+                <div>
+                    <input type="text" placeholder="Заголовок новости" value={newsTitle} onChange={(e) => setNewsTitle(e.target.value)} />
+                    <input type="text" placeholder="Текст новости" value={newsText} onChange={(e) => setNewsText(e.target.value)} />
+                    <input type="text" placeholder="Изображение новости" value={newsImage} onChange={(e) => setNewsImage(e.target.value)} />
+                    <Button text="Добавить новость" onClick={addNews} />
+                </div>
+                <Button text="Назад" onClick={() => setPage(PAGES.MAIN)} />
             </div>
-            <div>
-                <input type="text" placeholder="Заголовок баннера" value={title} onChange={(e) => setTitle(e.target.value)} />
-                <input type="text" placeholder="Текст баннера" value={text} onChange={(e) => setText(e.target.value)} />
-                <input type="text" placeholder="Изображение баннера" value={image} onChange={(e) => setImage(e.target.value)} />
-                <input type="text" placeholder="URL баннера" value={url} onChange={(e) => setUrl(e.target.value)} />
-                <Button text="Добавить баннер" onClick={addBanner} />
-            </div>
-            <div>
-                <h2>Список баннеров</h2>
-                {banners && banners.map((banner: TBanner) => (
-                    <div key={banner.id}>
-                        <p>{banner.title}</p>
-                        <Button text="Удалить" onClick={() => deleteBanner(banner.id)} />
-                        <Button text={banner.hidden ? "Показать" : "Скрыть"} onClick={() => hideBanner(banner.id, !banner.hidden)} />
-                        <input
-                            type="number"
-                            placeholder="Приоритет"
-                            value={banner.priority}
-                            onChange={(e) => setBannerOrder(banner.id, parseInt(e.target.value))}
-                        />
-                    </div>
-                ))}
-            </div>
-            <div>
-                <input type="text" placeholder="Заголовок новости" value={newsTitle} onChange={(e) => setNewsTitle(e.target.value)} />
-                <input type="text" placeholder="Текст новости" value={newsText} onChange={(e) => setNewsText(e.target.value)} />
-                <input type="text" placeholder="Изображение новости" value={newsImage} onChange={(e) => setNewsImage(e.target.value)} />
-                <Button text="Добавить новость" onClick={addNews} />
-            </div>
-            <Button text="Назад" onClick={() => setPage(PAGES.MAIN)} />
-        </div>
+        <Footer setPage={setPage} />
+    </>
     );
 };
 

@@ -15,6 +15,10 @@ class Appeals {
         return $this->db->addAppeal($userId, $category, $comment);
     }
 
+    public function deleteAppeal($id) {
+        return $this->db->deleteAppeal($id);
+    }
+
     public function updateAppealStatus($id, $status) {
         return $this->db->updateAppealStatus($id, $status);
     }

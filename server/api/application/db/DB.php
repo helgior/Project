@@ -111,4 +111,9 @@ class DB
         return $this->execute("INSERT INTO news (title, text, image) VALUES (?, ?, ?)", [$title, $text, $image]);
     }
 
+    public function deleteAppeal($id)
+    {
+        return $this->execute("DELETE FROM appeals WHERE id=?", [$id]);
+    }
+
 }

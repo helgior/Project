@@ -145,6 +145,14 @@ class Application
         return ['error' => 242];
     }
 
+    public function deleteAppeal($params)
+    {
+        if ($params['id']) {
+            return $this->appeals->deleteAppeal($params['id']);
+        }
+        return ['error' => 242];
+    }
+
     public function updateAppealStatus($params)
     {
         if ($params['id'] && $params['status']) {

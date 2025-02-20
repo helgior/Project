@@ -43,6 +43,7 @@ function result($params) {
 
             case 'getAppeals': return $app->getAppeals($params);
             case 'createAppeal': return $app->createAppeal($params);
+            case 'deleteAppeal': return $app->deleteAppeal($params);
             case 'updateAppealStatus': return $app->updateAppealStatus($params);
             case 'assignExecutor': return $app->assignExecutor($params);
 

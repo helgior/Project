@@ -117,6 +117,7 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
             <Menu setPage={setPage} />
             <div className='admin-panel'>
                 <h1>Админ панель</h1>
+                <h2>Пользователи</h2>
                 <div>
                     <input type="text" placeholder="Логин" value={login} onChange={(e) => setLogin(e.target.value)} />
                     <input type="password" placeholder="Пароль" value={password} onChange={(e) => setPassword(e.target.value)} />
@@ -128,6 +129,7 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
                     </select>
                     <Button text="Добавить пользователя" onClick={addUser} />
                 </div>
+                <h2>Баннеры</h2>
                 <div>
                     <input type="text" placeholder="Заголовок баннера" value={title} onChange={(e) => setTitle(e.target.value)} />
                     <input type="text" placeholder="Текст баннера" value={text} onChange={(e) => setText(e.target.value)} />
@@ -135,8 +137,8 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
                     <input type="text" placeholder="URL баннера" value={url} onChange={(e) => setUrl(e.target.value)} />
                     <Button text="Добавить баннер" onClick={addBanner} />
                 </div>
-                <div>
-                    <h2>Список баннеров</h2>
+                <h2>Список баннеров</h2>
+                <div>    
                     {banners && banners.map((banner: TBanner) => (
                         <div key={banner.id}>
                             <p>{banner.title}</p>
@@ -157,7 +159,6 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
                     <input type="text" placeholder="Изображение новости" value={newsImage} onChange={(e) => setNewsImage(e.target.value)} />
                     <Button text="Добавить новость" onClick={addNews} />
                 </div>
-                <Button text="Назад" onClick={() => setPage(PAGES.MAIN)} />
             </div>
         <Footer setPage={setPage} />
     </>

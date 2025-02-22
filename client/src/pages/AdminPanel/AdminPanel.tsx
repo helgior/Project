@@ -116,8 +116,9 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
         <>
             <Menu setPage={setPage} />
             <div className='admin-panel'>
-                <h1>Админ панель</h1>
-                <h2>Пользователи</h2>
+                <div>
+                <h1 className='title-header'>Админ панель</h1>
+                <h2 className='title-header'>Пользователи</h2>
                 <div>
                     <input type="text" placeholder="Логин" value={login} onChange={(e) => setLogin(e.target.value)} />
                     <input type="password" placeholder="Пароль" value={password} onChange={(e) => setPassword(e.target.value)} />
@@ -129,16 +130,21 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
                     </select>
                     <Button text="Добавить пользователя" onClick={addUser} />
                 </div>
-                <h2>Баннеры</h2>
-                <div>
+                <h2 className='title-header'>Баннеры</h2>
                     <input type="text" placeholder="Заголовок баннера" value={title} onChange={(e) => setTitle(e.target.value)} />
                     <input type="text" placeholder="Текст баннера" value={text} onChange={(e) => setText(e.target.value)} />
                     <input type="text" placeholder="Изображение баннера" value={image} onChange={(e) => setImage(e.target.value)} />
                     <input type="text" placeholder="URL баннера" value={url} onChange={(e) => setUrl(e.target.value)} />
                     <Button text="Добавить баннер" onClick={addBanner} />
+                    <h2 className='title-header'>Новости</h2>
+                    <div>
+                    <input type="text" placeholder="Заголовок новости" value={newsTitle} onChange={(e) => setNewsTitle(e.target.value)} />
+                    <input type="text" placeholder="Текст новости" value={newsText} onChange={(e) => setNewsText(e.target.value)} />
+                    <input type="text" placeholder="Изображение новости" value={newsImage} onChange={(e) => setNewsImage(e.target.value)} />
+                    <Button text="Добавить новость" onClick={addNews} />
                 </div>
-                <h2>Список баннеров</h2>
-                <div>    
+                <h2 className='title-header'>Список баннеров</h2>
+                <div className='banner-wrapper'>    
                     {banners && banners.map((banner: TBanner) => (
                         <div key={banner.id}>
                             <p>{banner.title}</p>
@@ -153,11 +159,6 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
                         </div>
                     ))}
                 </div>
-                <div>
-                    <input type="text" placeholder="Заголовок новости" value={newsTitle} onChange={(e) => setNewsTitle(e.target.value)} />
-                    <input type="text" placeholder="Текст новости" value={newsText} onChange={(e) => setNewsText(e.target.value)} />
-                    <input type="text" placeholder="Изображение новости" value={newsImage} onChange={(e) => setNewsImage(e.target.value)} />
-                    <Button text="Добавить новость" onClick={addNews} />
                 </div>
             </div>
         <Footer setPage={setPage} />

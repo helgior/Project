@@ -42,6 +42,8 @@ function result($params) {
             case 'getRequests': return $app->getRequests($params); // Кожевников
             case 'answerToRequest': return $app->answerToRequest($params); // Широбоков
 
+            case 'getPoints': return $app->getPoints($params);
+            
             default: return ['error' => 102];
         }
     }

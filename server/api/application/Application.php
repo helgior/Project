@@ -115,4 +115,9 @@ class Application {
         }
         return ['error' => 242];
     }
+
+    public function getPoints($params)
+    {
+        return $this->news->getPoints();
+    }
 }

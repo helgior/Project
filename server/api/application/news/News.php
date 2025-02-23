@@ -32,4 +32,8 @@ class News {
     public function deleteNews($id) {
         return $this->db->deleteNews($id);
     }
+
+    public function getPoints() {
+        return $this->db->getPoints();
+    }
 }

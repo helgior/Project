@@ -33,6 +33,8 @@ const Maps: React.FC<IBasePage> = (props: IBasePage) => {
             .catch(error => console.error('Error fetching maps:', error));
     }, []);
 
+    console.log(server.getPoints());
+
     return (
         <>
             <Menu setPage = { setPage } />

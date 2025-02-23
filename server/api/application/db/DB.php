@@ -91,4 +91,8 @@ class DB {
         return $this->execute("DELETE FROM news WHERE id=?", [$id]);
     }
     
+    public function getPoints()
+    {
+        return $this->queryAll("SELECT * FROM street");
+    }
 }

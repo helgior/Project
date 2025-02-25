@@ -54,6 +54,16 @@ const AppealsUser: React.FC<IBasePage> = (props: IBasePage) => {
     setIsSelectorOpen(false);
   };
 
+  const addTheAppeal = async () => {
+    const response = await server.addAppeal("Сантехника", "ррр");
+    if (response) {
+        const appealsRes = await server.getAppeals();
+        alert('Баннер успешно добавлен');
+    } else {
+        alert('Ошибка при добавлении баннера');
+    }
+};
+
   return (
     <>
       {isModalOpen && (
@@ -91,7 +101,7 @@ const AppealsUser: React.FC<IBasePage> = (props: IBasePage) => {
                 className="form__textarea"
                 placeholder="Комментарий о проблеме"
               ></textarea>
-              <button className="formPopap__button">
+              <button onClick={() => addTheAppeal()}>
                 Отправить
               </button>
               <a href="#" className="popap__icon" onClick={toggleModal}>

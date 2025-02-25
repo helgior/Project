@@ -97,9 +97,9 @@ class DB
     {
         return $this->execute("UPDATE banners SET hidden=? WHERE id=?", [$hidden, $id]);
     }
-    public function setBannerOrder($id, $priority)
+    public function getBannerOrder()
     {
-        return $this->execute("UPDATE banners SET priority=? WHERE id=?", [$priority, $id]);
+        return $this->queryAll("SELECT * FROM banners ORDER BY priority");
     }
     public function getNews()
     {

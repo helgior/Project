@@ -111,12 +111,9 @@ class Application
         return ['error' => 242];
     }
 
-    public function setBannerOrder($params)
+    public function getBannerOrder($params)
     {
-        if ($params['id'] && isset($params['priority'])) {
-            return $this->news->setBannerOrder($params['id'], $params['priority']);
-        }
-        return ['error' => 242];
+        return $this->news->getBannerOrder();
     }
 
     public function getNews($params)

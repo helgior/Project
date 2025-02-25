@@ -31,7 +31,7 @@ function result($params) {
             case 'addBanner': return $app->addBanner($params);
             case 'deleteBanner': return $app->deleteBanner($params); // Шергазиев
             case 'updateBanner': return $app->updateBanner($params); // Сысоев POST (уметь скрывать баннер)
-            case 'setBannerOrder': return $app->setBannerOrder($params); // Джафаров 
+            case 'getBannerOrder': return $app->getBannerOrder($params); // Джафаров 
             // для новости записывать дату
             case 'getNews': return $app->getNews($params); // Сабирова
             case 'addNews': return $app->addNews($params); // Маслова POST

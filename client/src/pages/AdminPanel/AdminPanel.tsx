@@ -4,6 +4,7 @@ import { useBannerContext } from '../../components/BannerContext/BannerContext';
 import Button from '../../components/Button/Button';
 import { IBasePage, PAGES } from '../../pages/PageManager';
 import { TBanner } from '../../services/server/types';
+import { TAppeal } from "../../services/server/types";
 
 import "./AdminPanel.scss";
 
@@ -29,6 +30,8 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
     const [newsTitle, setNewsTitle] = useState('');
     const [newsText, setNewsText] = useState('');
     const [newsImage, setNewsImage] = useState('');
+    const [appeals, setAppeals] = useState<TAppeal[]>([]);
+    const [error, setError] = useState('');
 
     useEffect(() => {
         (async () => {
@@ -38,6 +41,21 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
             }
         })();
     }, [banners, server, setBanners]);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const appealsRes = await server.getAppeals();
+                if (appealsRes) {
+                    setAppeals(appealsRes);
+                } else {
+                    setError("Нет доступных обращений.");
+                }
+            } catch (err) {
+                setError("Ошибка при загрузке обращений.");
+            }
+        })();
+    }, [appeals, server, setAppeals]);
 
     const addUser = async () => {
         const response = await fetch('/api/register', {
@@ -108,6 +126,17 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
         }
     };
 
+    const deleteAppeal = async (id: number) => {
+        const response = await server.deleteAppeal(id);
+        if (response) {
+            const appealsRes = await server.getAppeals();
+            setAppeals(appeals);
+            alert('Обращение успешно удалено');
+        } else {
+            alert('Ошибка при удалении обращения');
+        }
+    };
+
     if (user && user.role !== 'admin') {
         return <div>Доступ запрещен</div>;
     }
@@ -116,8 +145,8 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
         <>
             <Menu setPage={setPage} />
             <div className='admin-panel'>
-                <div>
                 <h1 className='title-header'>Админ панель</h1>
+                <div>
                 <h2 className='title-header'>Пользователи</h2>
                 <div>
                     <input type="text" placeholder="Логин" value={login} onChange={(e) => setLogin(e.target.value)} />
@@ -130,21 +159,23 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
                     </select>
                     <Button text="Добавить пользователя" onClick={addUser} />
                 </div>
-                <h2 className='title-header'>Баннеры</h2>
-                    <input type="text" placeholder="Заголовок баннера" value={title} onChange={(e) => setTitle(e.target.value)} />
-                    <input type="text" placeholder="Текст баннера" value={text} onChange={(e) => setText(e.target.value)} />
-                    <input type="text" placeholder="Изображение баннера" value={image} onChange={(e) => setImage(e.target.value)} />
-                    <input type="text" placeholder="URL баннера" value={url} onChange={(e) => setUrl(e.target.value)} />
-                    <Button text="Добавить баннер" onClick={addBanner} />
-                    <h2 className='title-header'>Новости</h2>
-                    <div>
+                <h2 className='title-header'>Новости</h2>
+                <div>
                     <input type="text" placeholder="Заголовок новости" value={newsTitle} onChange={(e) => setNewsTitle(e.target.value)} />
                     <input type="text" placeholder="Текст новости" value={newsText} onChange={(e) => setNewsText(e.target.value)} />
                     <input type="text" placeholder="Изображение новости" value={newsImage} onChange={(e) => setNewsImage(e.target.value)} />
                     <Button text="Добавить новость" onClick={addNews} />
                 </div>
+                <h2 className='title-header'>Баннеры</h2>
+                <div>
+                    <input type="text" placeholder="Заголовок баннера" value={title} onChange={(e) => setTitle(e.target.value)} />
+                    <input type="text" placeholder="Текст баннера" value={text} onChange={(e) => setText(e.target.value)} />
+                    <input type="text" placeholder="Изображение баннера" value={image} onChange={(e) => setImage(e.target.value)} />
+                    <input type="text" placeholder="URL баннера" value={url} onChange={(e) => setUrl(e.target.value)} />
+                    <Button text="Добавить баннер" onClick={addBanner} />
+                </div>
                 <h2 className='title-header'>Список баннеров</h2>
-                <div className='banner-wrapper'>    
+                <div className='list-wrapper'>    
                     {banners && banners.map((banner: TBanner) => (
                         <div key={banner.id}>
                             <p>{banner.title}</p>
@@ -159,6 +190,14 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
                         </div>
                     ))}
                 </div>
+                <h2 className='title-header'>Список обращений</h2>
+                <div className='list-wrapper'> 
+                    {appeals && appeals.map((appeal: TAppeal) => (
+                        <div key={appeal.id}>
+                            <Button text="Удалить" onClick={() => deleteAppeal(appeal.id)} />
+                    </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         <Footer setPage={setPage} />

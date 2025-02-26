@@ -7,7 +7,7 @@ class DB
     {
         // MySQL
         $host = '127.0.0.1';
-        $port = '3333';
+        $port = '3306';
         $user = 'root';
         $pass = '';
         $db = 'webjek';
@@ -97,6 +97,11 @@ class DB
     {
         return $this->execute("UPDATE banners SET hidden=? WHERE id=?", [$hidden, $id]);
     }
+
+    public function setBannerOrder($id, $priority)
+    {
+        return $this->execute("UPDATE banners SET priority=? WHERE id=?", [$priority, $id]);
+    }    
     public function getBannerOrder()
     {
         return $this->queryAll("SELECT * FROM banners ORDER BY priority");

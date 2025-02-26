@@ -7,7 +7,7 @@ class DB
     {
         // MySQL
         $host = '127.0.0.1';
-        $port = '3333';
+        $port = '3306';
         $user = 'root';
         $pass = '';
         $db = 'webjek';
@@ -109,6 +109,11 @@ class DB
     public function addNews($title, $text, $image)
     {
         return $this->execute("INSERT INTO news (title, text, image) VALUES (?, ?, ?)", [$title, $text, $image]);
+    }
+
+    public function addAppeal( $comment, $category)
+    {
+        return $this->execute("INSERT INTO appeals ( comment, category) VALUES (?, ?)", [$comment, $category]);
     }
 
 }

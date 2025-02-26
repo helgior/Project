@@ -54,15 +54,14 @@ const AppealsUser: React.FC<IBasePage> = (props: IBasePage) => {
     setIsSelectorOpen(false);
   };
 
-  const addTheAppeal = async () => {
-    const response = await server.addAppeal("Сантехника", "ррр");
+  const addTheAppeal = async (category:"Сантехника"| "Электрика" | "Функционал сайта", comment:string) => {
+    const response = await server.addAppeal(category, comment);
     if (response) {
-        const appealsRes = await server.getAppeals();
-        alert('Баннер успешно добавлен');
+        alert('Обращение успешно добавлено');
     } else {
-        alert('Ошибка при добавлении баннера');
+        alert('Ошибка при добавлении обращения');
     }
-};
+  };
 
   return (
     <>
@@ -101,7 +100,7 @@ const AppealsUser: React.FC<IBasePage> = (props: IBasePage) => {
                 className="form__textarea"
                 placeholder="Комментарий о проблеме"
               ></textarea>
-              <button onClick={() => addTheAppeal()}>
+              <button onClick={() => addTheAppeal("Сантехника","fpppf")}>
                 Отправить
               </button>
               <a href="#" className="popap__icon" onClick={toggleModal}>
@@ -135,7 +134,7 @@ const AppealsUser: React.FC<IBasePage> = (props: IBasePage) => {
                       <p className="text--main">Категория: {appeal.category}</p>
                     </div>
                     <div className="appeal__actions">
-                      <button className="button button--secondary">
+                      <button>
                         Удалить обращение
                       </button>
                     </div>

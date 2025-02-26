@@ -139,8 +139,9 @@ class Application
 
     public function createAppeal($params)
     {
-        if ($params['user_id'] && $params['category']) {
-            return $this->appeals->addAppeal($params['user_id'], $params['category'], $params['comment']);
+        if ($params['comment'] && $params['category']) {
+            return $this->appeals->addAppeal($params['category'], $params['comment']);
+            
         }
         return ['error' => 242];
     }

@@ -179,12 +179,10 @@ class Server {
   }
 
   addAppeal(
-    //userSurname: string,
-    category: "Сантехника" | "Электрика" | "Функциональность веб-сайта",
+    category: "Сантехника" | "Электрика" | "Функционал сайта",
     comment: string
   ): Promise<boolean | null> {
-    return this.request<boolean>("addAppeal", {
-      //userSurname,
+    return this.request<boolean>("createAppeal", {
       category,
       comment,
     });

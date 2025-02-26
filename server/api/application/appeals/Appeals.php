@@ -11,8 +11,8 @@ class Appeals {
         return $this->db->getAppeals();
     }
 
-    public function addAppeal($userId, $category, $comment = null) {
-        return $this->db->addAppeal($userId, $category, $comment);
+    public function addAppeal($category, $comment = null) {
+        return $this->db->addAppeal($category, $comment);
     }
 
     public function updateAppealStatus($id, $status) {

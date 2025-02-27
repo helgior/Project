@@ -1,11 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import CONFIG from "../../config";
 import { ServerContext } from "../../App";
-import { useBannerContext } from "../../components/BannerContext/BannerContext";
 import { IBasePage } from "../PageManager";
-
 import "./Main.scss";
-
 import Menu from "../../components/Menu/Menu";
 import Footer from "../../components/Footer/Footer";
 import FAQComponent from "../../components/FAQComponent/FAQComponent";
@@ -13,31 +10,27 @@ import BannerComponent from "../../components/BannerComponent/BannerComponent";
 
 const Main: React.FC<IBasePage> = ({ setPage }) => {
   const server = useContext(ServerContext);
-  const { banners, setBanners } = useBannerContext();
+  const [banners, setBanners] = useState([]);
   const [currentBanner, setCurrentBanner] = useState(0);
-
-  const visibleBanners = banners
-    ? banners.filter((banner) => !banner.hidden)
-    : [];
 
   useEffect(() => {
     (async () => {
-      if (!banners) {
-        const bannersRes = await server.getBanners();
-        setBanners(bannersRes);
+      const bannersRes = await server.getBanners();
+      if (bannersRes) {
+        setBanners(bannersRes.filter((banner) => !banner.hidden));
       }
     })();
-  }, [banners, server, setBanners]);
+  }, [server]);
 
   useEffect(() => {
-    if (visibleBanners.length === 0) return;
+    if (banners.length === 0) return;
 
     const interval = setInterval(() => {
-      setCurrentBanner((prev) => (prev + 1) % visibleBanners.length);
+      setCurrentBanner((prev) => (prev + 1) % banners.length);
     }, 4000);
 
     return () => clearInterval(interval);
-  }, [visibleBanners]);
+  }, [banners]);
 
   return (
     <>
@@ -46,7 +39,7 @@ const Main: React.FC<IBasePage> = ({ setPage }) => {
         <section className="main__window">
           <div className="wrapper">
             <div className="banners">
-              {visibleBanners?.map((banner, index) => (
+              {banners?.map((banner, index) => (
                 <BannerComponent
                   key={banner.id}
                   data={banner}

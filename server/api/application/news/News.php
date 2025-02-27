@@ -1,6 +1,8 @@
 <?php
 
 class News {
+    private $db;
+
     function __construct($db) {
         $this->db = $db;
     }
@@ -12,15 +14,19 @@ class News {
     public function addBanner($title, $text, $image, $url) {
         return $this->db->addBanner($title, $text, $image, $url);
     }
+
     public function deleteBanner($id) {
         return $this->db->deleteBanner($id);
     }
+
     public function updateBanner($id, $hidden) {
         return $this->db->updateBanner($id, $hidden);
     }
+
     public function setBannerOrder($id, $priority) {
         return $this->db->setBannerOrder($id, $priority);
     }
+
     public function getNews() {
         return $this->db->getNews();
     }

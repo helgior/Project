@@ -111,9 +111,9 @@ class DB
         return $this->execute("INSERT INTO news (title, text, image) VALUES (?, ?, ?)", [$title, $text, $image]);
     }
 
-    public function addAppeal( $comment, $category)
+    public function addAppeal($userId, $comment, $category)
     {
-        return $this->execute("INSERT INTO appeals ( comment, category) VALUES (?, ?)", [$comment, $category]);
+        return $this->execute("INSERT INTO appeals (userId, comment, category) VALUES (?, ?, ?)", [$userId, $comment, $category]);
     }
 
 }

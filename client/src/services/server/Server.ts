@@ -178,11 +178,13 @@ class Server {
     return this.request<TAppeal[]>("getAppeals");
   }
 
-  addAppeal(
-    category: "Сантехника" | "Электрика" | "Функционал сайта",
+  createAppeal(
+    userId: number,
+    category: string,
     comment: string
   ): Promise<boolean | null> {
     return this.request<boolean>("createAppeal", {
+      userId: userId.toString(),
       category,
       comment,
     });

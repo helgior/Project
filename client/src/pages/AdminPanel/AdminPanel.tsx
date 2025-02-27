@@ -4,6 +4,7 @@ import { useBannerContext } from '../../components/BannerContext/BannerContext';
 import Button from '../../components/Button/Button';
 import { IBasePage, PAGES } from '../../pages/PageManager';
 import { TBanner } from '../../services/server/types';
+import "./AdminPanel.scss";
 
 const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
     const { setPage } = props;
@@ -17,7 +18,7 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
     const [role, setRole] = useState('user');
     const [title, setTitle] = useState('');
     const [text, setText] = useState('');
-    const [image, setImage] = useState('');
+    const [imageFile, setImageFile] = useState<File | null>(null);
     const [url, setUrl] = useState('');
     const [newsTitle, setNewsTitle] = useState('');
     const [newsText, setNewsText] = useState('');
@@ -32,25 +33,25 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
         })();
     }, [banners, server, setBanners]);
 
-    const addUser = async () => {
-        const response = await fetch('/api/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ login, password, name, role }),
-        });
-        const result = await response.json();
-        if (result.error) {
-            alert('Ошибка при добавлении пользователя: ' + result.error);
-        } else {
-            alert('Пользователь успешно добавлен');
-        }
-    };
-
     const addBanner = async () => {
-        const response = await server.addBanner(title, text, image, url);
-        if (response) {
+        if (!imageFile) {
+            alert('Пожалуйста, выберите изображение для баннера');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('text', text);
+        formData.append('image', imageFile);
+        formData.append('url', url);
+
+        const response = await fetch('/api/addBanner', {
+            method: 'POST',
+            body: formData,
+        });
+
+        const result = await response.json();
+        if (result.success) {
             const bannersRes = await server.getBanners();
             setBanners(bannersRes);
             alert('Баннер успешно добавлен');
@@ -104,7 +105,6 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
     if (user && user.role !== 'admin') {
         return <div>Доступ запрещен</div>;
     }
-
     return (
         <div className='admin-panel'>
             <h1>Админ панель</h1>
@@ -122,7 +122,7 @@ const AdminPanel: React.FC<IBasePage> = (props: IBasePage) => {
             <div>
                 <input type="text" placeholder="Заголовок баннера" value={title} onChange={(e) => setTitle(e.target.value)} />
                 <input type="text" placeholder="Текст баннера" value={text} onChange={(e) => setText(e.target.value)} />
-                <input type="text" placeholder="Изображение баннера" value={image} onChange={(e) => setImage(e.target.value)} />
+                <input type="file" onChange={(e) => setImageFile(e.target.files ? e.target.files[0] : null)} />
                 <input type="text" placeholder="URL баннера" value={url} onChange={(e) => setUrl(e.target.value)} />
                 <Button text="Добавить баннер" onClick={addBanner} />
             </div>
